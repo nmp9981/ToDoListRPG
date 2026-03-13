@@ -1,48 +1,36 @@
-Unity 6 프로젝트에서 사용하기 가장 적합한 최신 .gitignore 내용입니다.
-
-소스트리(SourceTree) 설정의 **[고급] > [편집]**이나, 프로젝트 폴더 최상단에 .gitignore 파일을 만들고 아래 내용을 복사해서 붙여넣으세요.
-
-코드 스니펫
+# --- Unity 임시 파일 및 폴더 ---
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
-/[探Logs]/
+/[Ll]ogs/
 /[MemoryCaptures]/
+/[UserSettings]/
 
-# Asset Store 패키지는 필요할 때 다시 받으면 되므로 제외하는 것이 좋습니다.
+# --- 에셋 스토어 및 패키지 관련 ---
 /[Aa]ssets/AssetStoreTools*
 
-# Visual Studio / Rider 관련 임시 파일
-[Dd]ot[Nn]et/
+# --- IDE 관련 (Visual Studio, Rider 등) ---
 .vs/
 .gradle/
-ExportedObj/
-.consulo/
+.idea/
 *.csproj
 *.unityproj
 *.sln
 *.suo
-*.tmp
 *.user
 *.userprefs
 *.pidb
 *.booproj
-*.svd
-*.pdb
-*.opendb
-*.VC.db
 
-# Unity 자동 생성 파일
-sysinfo.txt
-*.apk
-*.unitypackage
-*.bundle
-
-# OS 관련 임시 파일
+# --- OS 생성 파일 ---
 .DS_Store
 .DS_Store?
 ._*
 Thumbs.db
 desktop.ini
+
+# --- 빌드 결과물 ---
+*.apk
+*.unitypackage
