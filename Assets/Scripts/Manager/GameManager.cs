@@ -20,5 +20,13 @@ public class GameManager : MonoBehaviour
             _instance = gm.GetComponent<GameManager>();
         }
     }
+    #region ตฅภฬลอ
+    private int _playerLv;
+    private int _playerHP;
+    private int _playerExp;
 
+    public int PlayerLV { get { return _playerLv; } set { _playerLv = value; } }
+    public int PlayerHP { get { return _playerHP; } set { _playerHP = value; } }
+    public int PlayerExp {  get { return _playerExp; } set {  _playerExp = value; } }
+    #endregion
 }
