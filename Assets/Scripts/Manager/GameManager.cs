@@ -21,12 +21,6 @@ public class GameManager : MonoBehaviour
         }
     }
     #region ตฅภฬลอ
-    private int _playerLv;
-    private int _playerHP;
-    private int _playerExp;
-
-    public int PlayerLV { get { return _playerLv; } set { _playerLv = value; } }
-    public int PlayerHP { get { return _playerHP; } set { _playerHP = value; } }
-    public int PlayerExp {  get { return _playerExp; } set {  _playerExp = value; } }
+    public PlayerInfo _player;
     #endregion
 }

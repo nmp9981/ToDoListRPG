@@ -30,5 +30,18 @@ public class PlayerInfo : MonoBehaviour
     public Image _spriteImage;//캐릭터 아이콘
 
 
+    private int _playerLv;
+    private string _playerSymbol;
+    private int _playerCurrentHP;
+    private int _playerCurrentEXP;
+    private int _playerFullHP;
+    private int _playerFullExp;
+
+    public int PlayerLV { get { return _playerLv; } set { _playerLv = value; } }
+    public string PlayerSymbol { get { return _playerSymbol; } set { _playerSymbol = value; } }
+    public int PlayerCurrentHP { get { return _playerCurrentHP; } set { _playerCurrentHP = value; } }
+    public int PlayerCurrentExp { get { return _playerCurrentEXP; } set { _playerCurrentEXP = value; } }
+    public int PlayerFullHP { get { return _playerFullHP; } set { _playerFullHP = value; } }
+    public int PlayerFullExp { get { return _playerFullExp; } set { _playerFullExp = value; } }
 
 }
