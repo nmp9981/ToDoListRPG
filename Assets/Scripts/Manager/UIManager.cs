@@ -24,24 +24,24 @@ public class UIManager : MonoBehaviour
     {
         foreach (TextMeshProUGUI txt in this.gameObject.GetComponentsInChildren<TextMeshProUGUI>())
         {
-            string objname = txt.name;
+            string objname = txt.gameObject.name;
 
             switch (objname)
             {
                 case "NameText":
-                    _playerNameText.text = txt.text;
+                    _playerNameText= txt;
                     break;
                 case "LvText":
-                    _playerLvText.text = txt.text;
+                    _playerLvText = txt;
                     break;
                 case "SymbolText":
-                    _playerSymbolText.text = txt.text;
+                    _playerSymbolText = txt;
                     break;
                 case "HPText":
-                    _playerHPText.text = txt.text;
+                    _playerHPText = txt;
                     break;
                 case "ExpText":
-                    _playerEXPText.text = txt.text;
+                    _playerEXPText = txt;
                     break;
                 default:
                     break;
@@ -58,8 +58,8 @@ public class UIManager : MonoBehaviour
         _playerLvText.text = $"{GameManager.Instance._player.PlayerLV}";
         _playerSymbolText.text = $"{GameManager.Instance._player.PlayerSymbol}";
 
-        var rate = CalRate();
-        _playerHPText.text = $"{GameManager.Instance._player.PlayerCurrentHP} / {GameManager.Instance._player.PlayerFullHP}";
+        var rate = Cal_HP_EXPRate();
+        _playerHPText.text = $"{rate.hpRate:F1}%";
         _playerEXPText.text = $"{GameManager.Instance._player.PlayerCurrentExp} [{rate.expRate100:F2}%]";
 
         _hpBarImage.fillAmount = rate.hpRate;

@@ -34,7 +34,7 @@ public class PlayerInfo : MonoBehaviour
     private string _playerSymbol;
     private int _playerCurrentHP;
     private int _playerCurrentEXP;
-    private int _playerFullHP;
+    private int _playerFullHP = 1000;
     private int _playerFullExp;
 
     public int PlayerLV { get { return _playerLv; } set { _playerLv = value; } }
