@@ -11,6 +11,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _playerHPText;
     [SerializeField] private TextMeshProUGUI _playerEXPText;
 
+    [Header("캐릭터 이미지")]
+    [SerializeField] private Image _titleImage;//칭호
+
     [Header("HP/MP 바")]
     [SerializeField] private Image _hpBarImage;
     [SerializeField] private Image _expBarImage;
