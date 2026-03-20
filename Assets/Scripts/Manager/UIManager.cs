@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _playerNameText;
     [SerializeField] private TextMeshProUGUI _playerLvText;
     [SerializeField] private TextMeshProUGUI _playerSymbolText;
+    [SerializeField] private TextMeshProUGUI _playerMoneyText;
     [SerializeField] private TextMeshProUGUI _playerHPText;
     [SerializeField] private TextMeshProUGUI _playerEXPText;
 
@@ -40,6 +41,9 @@ public class UIManager : MonoBehaviour
                 case "SymbolText":
                     _playerSymbolText = txt;
                     break;
+                case "MoneyText":
+                    _playerMoneyText = txt;
+                    break;
                 case "HPText":
                     _playerHPText = txt;
                     break;
@@ -60,6 +64,7 @@ public class UIManager : MonoBehaviour
         _playerNameText.text = $"{GameManager.Instance._player._playerName}";
         _playerLvText.text = $"{GameManager.Instance._player.PlayerLV}";
         _playerSymbolText.text = $"{GameManager.Instance._player.PlayerSymbol}";
+        _playerMoneyText.text = $"{GameManager.Instance._player.PlayerHasMoney}";
 
         var rate = Cal_HP_EXPRate();
         _playerHPText.text = $"{rate.hpRate:F1}%";

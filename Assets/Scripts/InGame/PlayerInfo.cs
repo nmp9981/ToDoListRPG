@@ -32,6 +32,7 @@ public class PlayerInfo : MonoBehaviour
 
     private int _playerLv;
     private string _playerSymbol;
+    private int _playerHasMoney;
     private int _playerCurrentHP;
     private int _playerCurrentEXP;
     private int _playerFullHP = 1000;
@@ -39,6 +40,7 @@ public class PlayerInfo : MonoBehaviour
 
     public int PlayerLV { get { return _playerLv; } set { _playerLv = value; } }
     public string PlayerSymbol { get { return _playerSymbol; } set { _playerSymbol = value; } }
+    public int PlayerHasMoney { get { return _playerHasMoney; } set { _playerHasMoney = value; } }
     public int PlayerCurrentHP { get { return _playerCurrentHP; } set { _playerCurrentHP = value; } }
     public int PlayerCurrentExp { get { return _playerCurrentEXP; } set { _playerCurrentEXP = value; } }
     public int PlayerFullHP { get { return _playerFullHP; } set { _playerFullHP = value; } }
