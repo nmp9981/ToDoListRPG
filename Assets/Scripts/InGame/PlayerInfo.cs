@@ -7,7 +7,7 @@ public enum TaskUnit
     Day,
     Week,
     Month,
-    Year,
+    Personal,
     Count
 }
 
