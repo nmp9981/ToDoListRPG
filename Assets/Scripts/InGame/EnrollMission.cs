@@ -95,8 +95,8 @@ public class EnrollMission : MonoBehaviour
             default:
                 break;
         }
-        //기타 UI
-        _newMissionInfo.repeatTextObj.SetActive(_isRepeat);
+        //UI 공개
+        _newMissionInfo.ShowMissionUI();
 
         gameObject.SetActive(false);
     }

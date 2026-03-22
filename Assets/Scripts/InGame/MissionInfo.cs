@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public struct Mission
@@ -18,7 +19,12 @@ public class MissionInfo : MonoBehaviour
     public int decreaseHP;//감소 HP
 
     [Header("UI")]
-    public GameObject repeatTextObj; 
+    [SerializeField] private GameObject repeatTextObj;
+    [SerializeField] private TextMeshProUGUI titleTextUI;
+    [SerializeField] private TextMeshProUGUI expTextUI;
+    [SerializeField] private TextMeshProUGUI moneyTextUI;
+    [SerializeField] private TextMeshProUGUI dueTextUI;
+
 
     private void Awake()
     {
@@ -55,11 +61,24 @@ public class MissionInfo : MonoBehaviour
     }
 
     /// <summary>
+    /// UI 보이기
+    /// </summary>
+    public void ShowMissionUI()
+    {
+        titleTextUI.text = mission.Title;
+        expTextUI.text = mission.getExp.ToString();
+        moneyTextUI.text = mission.getMoney.ToString();
+        dueTextUI.text = $"{dueTime:F0}";
+        repeatTextObj.SetActive(mission.isRepeat);
+    }
+
+    /// <summary>
     /// 남은 시간 보이기
     /// </summary>
     void ShowDeadline()
     {
         dueTime -= Time.deltaTime;
+        dueTextUI.text = $"{dueTime:F0}";
     }
 
     /// <summary>
