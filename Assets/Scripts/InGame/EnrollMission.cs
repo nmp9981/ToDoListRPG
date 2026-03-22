@@ -73,7 +73,7 @@ public class EnrollMission : MonoBehaviour
         _newMissionInfo.mission.Title = _missionNameText.text;
         _newMissionInfo.mission.getExp = int.Parse(_missionGetExp.text);
         _newMissionInfo.mission.getMoney = int.Parse(_missionGetMoney.text);
-        _newMissionInfo.mission.isRepeat = _isRepeat;
+        _newMissionInfo.mission.isRepeat = _isRepeat.isOn;
         _newMissionInfo.missionDetail = _missionDetailText.text;
         _newMissionInfo.dueTime = SetDueTime();
        
