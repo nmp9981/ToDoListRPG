@@ -3,6 +3,16 @@ using UnityEngine;
 public class MissionUI : MonoBehaviour
 {
     [SerializeField] private GameObject[] missionPages = new GameObject[4];
+    [SerializeField] private GameObject addMissionEnrollObj;
+    
+    
+    /// <summary>
+    /// 미션 추가
+    /// </summary>
+    public void AddMission()
+    {
+        addMissionEnrollObj.SetActive(true);
+    }
 
     /// <summary>
     /// 일일미션 보이기

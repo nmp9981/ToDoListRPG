@@ -22,5 +22,6 @@ public class GameManager : MonoBehaviour
     }
     #region ตฅภฬลอ
     public PlayerInfo _player;
+    public GameObject _missionPrefab;
     #endregion
 }
