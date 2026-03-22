@@ -17,6 +17,9 @@ public class MissionInfo : MonoBehaviour
     public bool isComplete = false;//미션 완료 여부
     public int decreaseHP;//감소 HP
 
+    [Header("UI")]
+    public GameObject repeatTextObj; 
+
     private void Awake()
     {
         SetDecreaseHP();
