@@ -25,7 +25,6 @@ public class MissionInfo : MonoBehaviour
     [SerializeField] private TextMeshProUGUI moneyTextUI;
     [SerializeField] private TextMeshProUGUI dueTextUI;
 
-
     private void Awake()
     {
         SetDecreaseHP();
@@ -87,6 +86,10 @@ public class MissionInfo : MonoBehaviour
     public void MissonComplete()
     {
         isComplete = true;
+
+        //보상 받기
+        GameManager.Instance._player.PlayerCurrentExp += mission.getExp;
+        GameManager.Instance._player.PlayerHasMoney += mission.getMoney;
     }
     /// <summary>
     /// 자세히 보기

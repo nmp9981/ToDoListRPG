@@ -1,9 +1,13 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    static UIManager _uiInstance;
+    public static UIManager UIInstance { get { Init();  return _uiInstance; } }
+
     [Header("캐릭터 정보")]
     [SerializeField] private TextMeshProUGUI _playerNameText;
     [SerializeField] private TextMeshProUGUI _playerLvText;
@@ -18,6 +22,21 @@ public class UIManager : MonoBehaviour
     [Header("HP/MP 바")]
     [SerializeField] private Image _hpBarImage;
     [SerializeField] private Image _expBarImage;
+
+    static void Init()
+    {
+        if (_uiInstance == null)
+        {
+            GameObject gm = GameObject.Find("Canvas");
+            if (gm == null)
+            {
+                gm = new GameObject { name = "Canvas" };
+
+                gm.AddComponent<UIManager>();
+            }
+            _uiInstance = gm.GetComponent<UIManager>();
+        }
+    }
 
     private void Awake()
     {
@@ -61,14 +80,14 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void UpdateUI()
     {
-        _playerNameText.text = $"{GameManager.Instance._player._playerName}";
-        _playerLvText.text = $"{GameManager.Instance._player.PlayerLV}";
+        _playerNameText.text = $"이름 : {GameManager.Instance._player._playerName}";
+        _playerLvText.text = $"Lv. {GameManager.Instance._player.PlayerLV}";
         _playerSymbolText.text = $"{GameManager.Instance._player.PlayerSymbol}";
         _playerMoneyText.text = $"{GameManager.Instance._player.PlayerHasMoney}";
 
         var rate = Cal_HP_EXPRate();
-        _playerHPText.text = $"{rate.hpRate:F1}%";
-        _playerEXPText.text = $"{GameManager.Instance._player.PlayerCurrentExp} [{rate.expRate100:F2}%]";
+        _playerHPText.text = $"HP : {rate.hpRate*100:F1}%";
+        _playerEXPText.text = $"EXP : {GameManager.Instance._player.PlayerCurrentExp} [{rate.expRate100:F2}%]";
 
         _hpBarImage.fillAmount = rate.hpRate;
         _expBarImage.fillAmount = rate.expRate;

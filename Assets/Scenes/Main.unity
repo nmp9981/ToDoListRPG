@@ -5512,7 +5512,7 @@ MonoBehaviour:
   _playerNameText: {fileID: 282967925}
   _playerLvText: {fileID: 447639518}
   _playerSymbolText: {fileID: 105705865}
-  _playerMoneyText: {fileID: 0}
+  _playerMoneyText: {fileID: 1943139433}
   _playerHPText: {fileID: 1936520863}
   _playerEXPText: {fileID: 1494487367}
   _titleImage: {fileID: 89301130}

@@ -26,7 +26,7 @@ public struct TaskInfo
 public class PlayerInfo : MonoBehaviour
 {
     public List<TaskInfo> _taskInfoList;//과제 리스트
-    public string _playerName;//캐릭터 명
+    public string _playerName = "나이트로드";//캐릭터 명
     public Image _spriteImage;//캐릭터 아이콘
 
 
@@ -37,6 +37,7 @@ public class PlayerInfo : MonoBehaviour
     private int _playerCurrentEXP;
     private int _playerFullHP = 1000;
     private int _playerFullExp;
+    private int _playerIncreaseHP = 500;
 
     public int PlayerLV { get { return _playerLv; } set { _playerLv = value; } }
     public string PlayerSymbol { get { return _playerSymbol; } set { _playerSymbol = value; } }
@@ -46,4 +47,40 @@ public class PlayerInfo : MonoBehaviour
     public int PlayerFullHP { get { return _playerFullHP; } set { _playerFullHP = value; } }
     public int PlayerFullExp { get { return _playerFullExp; } set { _playerFullExp = value; } }
 
+    private void Awake()
+    {
+        InitPlayerInfo();
+    }
+
+    /// <summary>
+    /// 캐릭터 정보 초기화
+    /// </summary>
+    public void InitPlayerInfo()
+    {
+        PlayerLV = 143;
+        PlayerHasMoney = 1000;
+        PlayerCurrentHP = PlayerFullHP;
+        PlayerCurrentExp = 20;
+        PlayerFullExp = 800;
+
+        UIManager.UIInstance.UpdateUI();
+    }
+
+
+    /// <summary>
+    /// 레벨 업
+    /// </summary>
+    public void PlayerLevelUP()
+    {
+        //레벨업
+        if (PlayerCurrentExp >= PlayerFullExp)
+        {
+            PlayerCurrentExp -= PlayerFullExp;
+            PlayerFullExp = (PlayerFullExp * GameManager.Instance.RequireExpRate) / 100;
+            PlayerCurrentHP = Mathf.Min(PlayerFullHP, PlayerCurrentHP+_playerIncreaseHP);
+            PlayerLV += 1;
+        }
+        //UI 반영
+        UIManager.UIInstance.UpdateUI();
+    }
 }

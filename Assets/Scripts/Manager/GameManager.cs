@@ -20,8 +20,17 @@ public class GameManager : MonoBehaviour
             _instance = gm.GetComponent<GameManager>();
         }
     }
+
+    private void Start()
+    {
+        _player = new PlayerInfo();
+        _player.InitPlayerInfo();
+    }
     #region 데이터
     public PlayerInfo _player;
     public GameObject _missionPrefab;
+
+    private int requireExpRate = 105;//경험치 배율
+    public int RequireExpRate { get { return requireExpRate; } }
     #endregion
 }
