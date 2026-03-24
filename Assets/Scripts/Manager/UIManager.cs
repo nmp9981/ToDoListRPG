@@ -1,3 +1,4 @@
+using System.Reflection;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -22,6 +23,11 @@ public class UIManager : MonoBehaviour
     [Header("HP/MP 바")]
     [SerializeField] private Image _hpBarImage;
     [SerializeField] private Image _expBarImage;
+
+    [Header("UI오브젝트")]
+    [SerializeField] private MissionCompleteUI _missionCompleteUI;
+
+    private Mission _selectMisson;
 
     static void Init()
     {
@@ -103,5 +109,30 @@ public class UIManager : MonoBehaviour
         float rate100Exp = rateExp * 100;
 
         return (rateHP, rateExp, rate100Exp);
+    }
+
+    /// <summary>
+    /// 미션 완료 UI 열기
+    /// </summary>
+    public void OpenCompleteUI(Mission mission)
+    {
+        _selectMisson = mission;
+        _missionCompleteUI.gameObject.SetActive(true);
+    }
+    /// <summary>
+    /// 미션 완료 UI 닫기
+    /// </summary>
+    public void CloseCompleteUI()
+    {
+        _missionCompleteUI.gameObject.SetActive(false);
+    }
+    /// <summary>
+    /// 미션 완료 확정
+    /// </summary>
+    public void ClickMissonCompleteButton()
+    {
+        var player = GameManager.Instance._player;
+        player.GetReward(_selectMisson.getExp, _selectMisson.getMoney);
+        CloseCompleteUI();
     }
 }

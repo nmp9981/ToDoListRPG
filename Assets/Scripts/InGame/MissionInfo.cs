@@ -86,11 +86,9 @@ public class MissionInfo : MonoBehaviour
     public void MissonComplete()
     {
         isComplete = true;
-
-        //보상 받기
-        GameManager.Instance._player.PlayerCurrentExp += mission.getExp;
-        GameManager.Instance._player.PlayerHasMoney += mission.getMoney;
+        UIManager.UIInstance.OpenCompleteUI(mission);
     }
+    
     /// <summary>
     /// 자세히 보기
     /// </summary>

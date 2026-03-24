@@ -66,6 +66,12 @@ public class PlayerInfo : MonoBehaviour
         UIManager.UIInstance.UpdateUI();
     }
 
+    public void GetReward(int xp, int money)
+    {
+        PlayerHasMoney += money;
+        PlayerCurrentExp += xp;
+        PlayerLevelUP();
+    }
 
     /// <summary>
     /// ·¹º§ ¾÷
