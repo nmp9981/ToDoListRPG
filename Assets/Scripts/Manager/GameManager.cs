@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,8 +31,11 @@ public class GameManager : MonoBehaviour
     #region 데이터
     public PlayerInfo _player;
     public GameObject _missionPrefab;
+    public List<SymbolInfo> _playerLvSymbolImage = new();
 
-    private int requireExpRate = 105;//경험치 배율
-    public int RequireExpRate { get { return requireExpRate; } }
+    private int _requireExpRate = 105;//경험치 배율
+    private int _symbolMaxCount = 20;//칭호 개수
+    public int RequireExpRate { get { return _requireExpRate; } }
+    public int SymbolMaxCount { get { return _symbolMaxCount; } }
     #endregion
 }

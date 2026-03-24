@@ -4955,6 +4955,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _missionPrefab: {fileID: 8168362883461035148, guid: 21a0c56d0e43e6740aa9b5d52e8be8ea, type: 3}
+  _playerLvSymbolImage:
+  - _nextSymbolLv: 5
+    _symbolName: "\uBE0C\uB860\uC988"
+    _spriteImage: {fileID: -1700849951, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 10
+    _symbolName: "\uBE0C\uB860\uC988 - \uC791\uC2EC\uC0BC\uC77C"
+    _spriteImage: {fileID: 747268177, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 15
+    _symbolName: "\uBE0C\uB860\uC988 - \uC900\uBE44\uB41C \uC528\uC557"
+    _spriteImage: {fileID: 1225346793, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 20
+    _symbolName: "\uBE0C\uB860\uC988 - \uCD08\uBCF4 \uACC4\uD68D\uB7EC"
+    _spriteImage: {fileID: -1614479072, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 25
+    _symbolName: "\uC2E4\uBC84 - \uB8E8\uD2F4\uD654"
+    _spriteImage: {fileID: 98897716, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 30
+    _symbolName: "\uC2E4\uBC84 - \uC5B8\uB355\uC744 \uB118\uB294\uC790"
+    _spriteImage: {fileID: -570818361, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 37
+    _symbolName: "\uC2E4\uBC84 - \uC911\uAE09 \uACC4\uD68D\uB7EC"
+    _spriteImage: {fileID: -976738446, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 45
+    _symbolName: "\uC2E4\uBC84 - J"
+    _spriteImage: {fileID: -228188532, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 50
+    _symbolName: "\uACE8\uB4DC - \uC2E4\uCC9C\uC758 \uC720\uB9DD\uC8FC"
+    _spriteImage: {fileID: -1200930320, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 57
+    _symbolName: "\uACE8\uB4DC - \uC5F4\uC815\uC758 \uC5D4\uC9C4"
+    _spriteImage: {fileID: 189132240, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 64
+    _symbolName: "\uACE8\uB4DC - \uB8E8\uD2F4 \uB9C8\uC2A4\uD130"
+    _spriteImage: {fileID: -265525440, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 70
+    _symbolName: "\uACE8\uB4DC - \uACE0\uAE09 \uACC4\uD68D\uB7EC"
+    _spriteImage: {fileID: 94952012, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 77
+    _symbolName: "\uB2E4\uC774\uC544 - \uD30C\uC6CC J"
+    _spriteImage: {fileID: 1951386895, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 80
+    _symbolName: "\uB2E4\uC774\uC544 - \uC131\uCDE8\uC758 \uC544\uC774\uCF58"
+    _spriteImage: {fileID: -1105845177, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 84
+    _symbolName: "\uB2E4\uC774\uC544 - \uAC13\uC0DD\uB7EC"
+    _spriteImage: {fileID: 358313120, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 88
+    _symbolName: "\uB2E4\uC774\uC544 - \uB3C4\uC804\uC790"
+    _spriteImage: {fileID: 1304847921, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 92
+    _symbolName: "\uC2A4\uD0C0 - \uD55C\uACC4\uB97C \uB118\uC5B4\uC120 \uC790"
+    _spriteImage: {fileID: 1912187023, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 96
+    _symbolName: "\uC2A4\uD0C0 - \uC601\uAC10\uC758 \uC6D0\uCC9C"
+    _spriteImage: {fileID: -1959008279, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 100
+    _symbolName: "\uC2A4\uD0C0 - \uAC13\uC0DD\uC758 \uC9C0\uBC30\uC790"
+    _spriteImage: {fileID: -1775250146, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
+  - _nextSymbolLv: 210000000
+    _symbolName: "\uB2E4\uC774\uC544 - \uCD5C\uC885 \uC2B9\uB9AC\uC790"
+    _spriteImage: {fileID: 10404962, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
 --- !u!4 &555171618
 Transform:
   m_ObjectHideFlags: 0

@@ -23,6 +23,14 @@ public struct TaskInfo
     public int _rewardExp;//보상 경험치
 }
 
+[System.Serializable]
+public struct SymbolInfo
+{
+    public int _nextSymbolLv;
+    public string _symbolName;
+    public Sprite _spriteImage;
+}
+
 public class PlayerInfo : MonoBehaviour
 {
     public List<TaskInfo> _taskInfoList;//과제 리스트
@@ -31,7 +39,7 @@ public class PlayerInfo : MonoBehaviour
 
 
     private int _playerLv;
-    private string _playerSymbol;
+    private int _playerSymbolIndex;
     private int _playerHasMoney;
     private int _playerCurrentHP;
     private int _playerCurrentEXP;
@@ -40,7 +48,7 @@ public class PlayerInfo : MonoBehaviour
     private int _playerIncreaseHP = 500;
 
     public int PlayerLV { get { return _playerLv; } set { _playerLv = value; } }
-    public string PlayerSymbol { get { return _playerSymbol; } set { _playerSymbol = value; } }
+    public int PlayerSymbolIndex { get { return _playerSymbolIndex; } set { _playerSymbolIndex = value; } }
     public int PlayerHasMoney { get { return _playerHasMoney; } set { _playerHasMoney = value; } }
     public int PlayerCurrentHP { get { return _playerCurrentHP; } set { _playerCurrentHP = value; } }
     public int PlayerCurrentExp { get { return _playerCurrentEXP; } set { _playerCurrentEXP = value; } }
@@ -57,11 +65,12 @@ public class PlayerInfo : MonoBehaviour
     /// </summary>
     public void InitPlayerInfo()
     {
-        PlayerLV = 143;
+        PlayerLV = 1;
         PlayerHasMoney = 1000;
         PlayerCurrentHP = PlayerFullHP;
         PlayerCurrentExp = 20;
         PlayerFullExp = 800;
+        PlayerSymbolIndex = 0;
 
         UIManager.UIInstance.UpdateUI();
     }
@@ -81,10 +90,15 @@ public class PlayerInfo : MonoBehaviour
         //레벨업
         if (PlayerCurrentExp >= PlayerFullExp)
         {
+            var gm = GameManager.Instance;
             PlayerCurrentExp -= PlayerFullExp;
-            PlayerFullExp = (PlayerFullExp * GameManager.Instance.RequireExpRate) / 100;
+            PlayerFullExp = (PlayerFullExp * gm.RequireExpRate) / 100;
             PlayerCurrentHP = Mathf.Min(PlayerFullHP, PlayerCurrentHP+_playerIncreaseHP);
             PlayerLV += 1;
+
+            //칭호 변경
+            if (PlayerLV >= gm._playerLvSymbolImage[PlayerSymbolIndex]._nextSymbolLv
+                && PlayerSymbolIndex < gm.SymbolMaxCount-1) PlayerSymbolIndex += 1;
         }
         //UI 반영
         UIManager.UIInstance.UpdateUI();

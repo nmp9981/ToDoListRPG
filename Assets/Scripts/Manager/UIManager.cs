@@ -3,6 +3,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class UIManager : MonoBehaviour
 {
@@ -86,14 +87,16 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void UpdateUI()
     {
-        _playerNameText.text = $"이름 : {GameManager.Instance._player._playerName}";
-        _playerLvText.text = $"Lv. {GameManager.Instance._player.PlayerLV}";
-        _playerSymbolText.text = $"{GameManager.Instance._player.PlayerSymbol}";
-        _playerMoneyText.text = $"{GameManager.Instance._player.PlayerHasMoney}";
+        var player = GameManager.Instance._player;
+        _playerNameText.text = $"이름 : {player._playerName}";
+        _playerLvText.text = $"Lv. {player.PlayerLV}";
+        _playerSymbolText.text = $"{GameManager.Instance._playerLvSymbolImage[player.PlayerSymbolIndex]._symbolName}";
+        _playerMoneyText.text = $"{player.PlayerHasMoney}";
+        _titleImage.sprite = GameManager.Instance._playerLvSymbolImage[player.PlayerSymbolIndex]._spriteImage;
 
         var rate = Cal_HP_EXPRate();
         _playerHPText.text = $"HP : {rate.hpRate*100:F1}%";
-        _playerEXPText.text = $"EXP : {GameManager.Instance._player.PlayerCurrentExp} [{rate.expRate100:F2}%]";
+        _playerEXPText.text = $"EXP : {player.PlayerCurrentExp} [{rate.expRate100:F2}%]";
 
         _hpBarImage.fillAmount = rate.hpRate;
         _expBarImage.fillAmount = rate.expRate;
