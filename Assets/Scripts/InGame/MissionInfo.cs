@@ -77,13 +77,18 @@ public class MissionInfo : MonoBehaviour
     {
         dueTime -= Time.deltaTime;
 
-        int dueHour = (int)dueTime / 3600;
+        int dueDay = (int)dueTime / 86400;
+        int restHour = (int)dueTime % 86400;
+        int dueHour = (int)restHour / 3600;
         int restMinute = (int)dueTime % 3600;
         int dueMinute = (int)restMinute / 60;
         int dueSecond = (int)dueTime % 60;
-        dueTextUI.text = $"{dueHour} : {dueMinute} : {dueSecond}";
 
-
+        if (dueDay >= 1)
+        {
+            dueTextUI.text = $" {dueDay}¿œ {dueHour} : {dueMinute}";
+        }
+        else dueTextUI.text = $" {dueHour} : {dueMinute} : {dueSecond}";
     }
 
     /// <summary>
