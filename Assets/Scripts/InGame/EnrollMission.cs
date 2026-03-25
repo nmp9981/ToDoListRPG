@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,11 @@ public class EnrollMission : MonoBehaviour
     [SerializeField] Toggle _isRepeat;
     [SerializeField] TMP_InputField _missionGetExp;
     [SerializeField] TMP_InputField _missionGetMoney;
+    [SerializeField] TMP_InputField _missionDueHour;
+    [SerializeField] TMP_InputField _missionDueMinute;
+
+    [Header("미션 기한")]
+    [SerializeField] ToggleGroup _weekToggleGroup;
 
     [Header("미션 유형별 오브젝트")]
     [SerializeField] GameObject daySelectObj;
@@ -42,6 +48,7 @@ public class EnrollMission : MonoBehaviour
     {
         _newMissionType = TaskUnit.Week;
         weekSelectObj.SetActive(tog.isOn);
+        daySelectObj.SetActive(tog.isOn);
     }
     public void SelectMonthMissionType(Toggle tog)
     {
@@ -75,7 +82,7 @@ public class EnrollMission : MonoBehaviour
         _newMissionInfo.mission.getMoney = int.Parse(_missionGetMoney.text);
         _newMissionInfo.mission.isRepeat = _isRepeat.isOn;
         _newMissionInfo.missionDetail = _missionDetailText.text;
-        _newMissionInfo.dueTime = SetDueTime();
+        _newMissionInfo.dueTime = SetDueTime(_newMissionType);
        
         //미션 생성
         switch (_newMissionType)
@@ -105,8 +112,29 @@ public class EnrollMission : MonoBehaviour
     /// 마감 시간 설정
     /// </summary>
     /// <returns></returns>
-    float SetDueTime()
+    float SetDueTime(TaskUnit unit)
     {
-        return 1000;
+        int hour = int.Parse(_missionDueHour.text);
+        int minute = int.Parse( _missionDueMinute.text);
+        int restTime = 0;
+
+        switch (unit)
+        {
+            case TaskUnit.Day:
+                restTime = CalTimeUtility.DiffTime_Day(hour, minute);
+                break;
+            case TaskUnit.Week:
+                restTime = CalTimeUtility.DiffTime_Week(hour, minute, _weekToggleGroup.GetFirstActiveToggle());
+                break;
+            case TaskUnit.Month:
+
+                break;
+            case TaskUnit.Personal:
+
+                break;
+            default:
+                break;
+        }
+        return restTime;
     }
 }

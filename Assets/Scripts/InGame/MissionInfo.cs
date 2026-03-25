@@ -67,7 +67,6 @@ public class MissionInfo : MonoBehaviour
         titleTextUI.text = mission.Title;
         expTextUI.text = mission.getExp.ToString();
         moneyTextUI.text = mission.getMoney.ToString();
-        dueTextUI.text = $"{dueTime:F0}";
         repeatTextObj.SetActive(mission.isRepeat);
     }
 
@@ -77,7 +76,14 @@ public class MissionInfo : MonoBehaviour
     void ShowDeadline()
     {
         dueTime -= Time.deltaTime;
-        dueTextUI.text = $"{dueTime:F0}";
+
+        int dueHour = (int)dueTime / 3600;
+        int restMinute = (int)dueTime % 3600;
+        int dueMinute = (int)restMinute / 60;
+        int dueSecond = (int)dueTime % 60;
+        dueTextUI.text = $"{dueHour} : {dueMinute} : {dueSecond}";
+
+
     }
 
     /// <summary>
