@@ -3,25 +3,36 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum MonthType
+{
+    NDay,
+    KWeek
+}
+
 public class EnrollMission : MonoBehaviour
 {
     [Header("미션 내용")]
     [SerializeField] TMP_InputField _missionNameText;
     [SerializeField] TMP_InputField _missionDetailText;
     [SerializeField] TaskUnit _newMissionType;
+    [SerializeField] MonthType _newMonthType;
     [SerializeField] Toggle _isRepeat;
     [SerializeField] TMP_InputField _missionGetExp;
     [SerializeField] TMP_InputField _missionGetMoney;
     [SerializeField] TMP_InputField _missionDueHour;
     [SerializeField] TMP_InputField _missionDueMinute;
+    [SerializeField] TMP_InputField _missionDueDay;
 
     [Header("미션 기한")]
     [SerializeField] ToggleGroup _weekToggleGroup;
+    [SerializeField] ToggleGroup _monthToggleGroup;
+    [SerializeField] TextMeshProUGUI _deadlineText;
 
     [Header("미션 유형별 오브젝트")]
     [SerializeField] GameObject daySelectObj;
     [SerializeField] GameObject weekSelectObj;
     [SerializeField] GameObject monthSelectObj;
+    [SerializeField] GameObject daySelect_MonthObj;
 
     [Header("미션 유형별 생성 위치")]
     [SerializeField] Transform _dayContent;
@@ -34,6 +45,7 @@ public class EnrollMission : MonoBehaviour
         daySelectObj.SetActive(false);
         weekSelectObj.SetActive(false);
         monthSelectObj.SetActive(false);
+        daySelect_MonthObj.SetActive(false);
     }
 
     /// <summary>
@@ -59,6 +71,16 @@ public class EnrollMission : MonoBehaviour
     {
         _newMissionType = TaskUnit.Personal;
     }
+    public void Select_Month_NDay(Toggle tog)
+    {
+        _newMonthType = MonthType.NDay;
+        daySelect_MonthObj.SetActive(tog.isOn);
+    }
+    public void Select_Month_NWeek(Toggle tog)
+    {
+        _newMonthType = MonthType.KWeek;
+        weekSelectObj.SetActive(tog.isOn);
+    }
 
     /// <summary>
     /// 신규 미션 등록
@@ -83,7 +105,8 @@ public class EnrollMission : MonoBehaviour
         _newMissionInfo.mission.isRepeat = _isRepeat.isOn;
         _newMissionInfo.missionDetail = _missionDetailText.text;
         _newMissionInfo.dueTime = SetDueTime(_newMissionType);
-       
+        _deadlineText.text = CalTimeUtility.NumToTime(_newMissionInfo.dueTime);
+
         //미션 생성
         switch (_newMissionType)
         {
@@ -127,7 +150,14 @@ public class EnrollMission : MonoBehaviour
                 restTime = CalTimeUtility.DiffTime_Week(hour, minute, _weekToggleGroup.GetFirstActiveToggle());
                 break;
             case TaskUnit.Month:
-
+                if (_newMonthType == MonthType.NDay)
+                {
+                    restTime = CalTimeUtility.DiffTime_Month(hour, minute, _missionDueDay.text);
+                }
+                else if (_newMonthType == MonthType.KWeek)
+                {
+                    restTime = CalTimeUtility.DiffTime_WeekMonth(hour, minute, _weekToggleGroup.GetFirstActiveToggle());
+                }
                 break;
             case TaskUnit.Personal:
 
