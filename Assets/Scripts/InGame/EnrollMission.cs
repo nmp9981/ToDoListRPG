@@ -22,6 +22,7 @@ public class EnrollMission : MonoBehaviour
     [SerializeField] TMP_InputField _missionDueHour;
     [SerializeField] TMP_InputField _missionDueMinute;
     [SerializeField] TMP_InputField _missionDueDay;
+    [SerializeField] TMP_InputField _missionDueWeekN;
 
     [Header("미션 기한")]
     [SerializeField] ToggleGroup _weekToggleGroup;
@@ -33,6 +34,7 @@ public class EnrollMission : MonoBehaviour
     [SerializeField] GameObject weekSelectObj;
     [SerializeField] GameObject monthSelectObj;
     [SerializeField] GameObject daySelect_MonthObj;
+    [SerializeField] GameObject weekN_MonthObj;
 
     [Header("미션 유형별 생성 위치")]
     [SerializeField] Transform _dayContent;
@@ -80,6 +82,7 @@ public class EnrollMission : MonoBehaviour
     {
         _newMonthType = MonthType.KWeek;
         weekSelectObj.SetActive(tog.isOn);
+        weekN_MonthObj.SetActive(tog.isOn);
     }
 
     /// <summary>
@@ -105,7 +108,7 @@ public class EnrollMission : MonoBehaviour
         _newMissionInfo.mission.isRepeat = _isRepeat.isOn;
         _newMissionInfo.missionDetail = _missionDetailText.text;
         _newMissionInfo.dueTime = SetDueTime(_newMissionType);
-        _deadlineText.text = CalTimeUtility.NumToTime(_newMissionInfo.dueTime);
+        //_deadlineText.text = CalTimeUtility.NumToTime(_newMissionInfo.dueTime);
 
         //미션 생성
         switch (_newMissionType)
@@ -152,11 +155,13 @@ public class EnrollMission : MonoBehaviour
             case TaskUnit.Month:
                 if (_newMonthType == MonthType.NDay)
                 {
-                    restTime = CalTimeUtility.DiffTime_Month(hour, minute, _missionDueDay.text);
+                    int day = int.Parse(_missionDueDay.text);
+                    restTime = CalTimeUtility.DiffTime_Month(hour, minute, day);
                 }
                 else if (_newMonthType == MonthType.KWeek)
                 {
-                    restTime = CalTimeUtility.DiffTime_WeekMonth(hour, minute, _weekToggleGroup.GetFirstActiveToggle());
+                    int weekNum = int.Parse(_missionDueWeekN.text);
+                    restTime = CalTimeUtility.DiffTime_WeekMonth(hour, minute, _weekToggleGroup.GetFirstActiveToggle(),weekNum);
                 }
                 break;
             case TaskUnit.Personal:
