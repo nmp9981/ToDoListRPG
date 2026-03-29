@@ -35,6 +35,7 @@ public class EnrollMission : MonoBehaviour
     [SerializeField] GameObject monthSelectObj;
     [SerializeField] GameObject daySelect_MonthObj;
     [SerializeField] GameObject weekN_MonthObj;
+    [SerializeField] GameObject missionRepeatTypeObj;
 
     [Header("미션 유형별 생성 위치")]
     [SerializeField] Transform _dayContent;
@@ -57,21 +58,25 @@ public class EnrollMission : MonoBehaviour
     {
         _newMissionType = TaskUnit.Day;
         daySelectObj.SetActive(tog.isOn);
+        missionRepeatTypeObj.SetActive(true);
     }
     public void SelectWeekMissionType(Toggle tog)
     {
         _newMissionType = TaskUnit.Week;
         weekSelectObj.SetActive(tog.isOn);
         daySelectObj.SetActive(tog.isOn);
+        missionRepeatTypeObj.SetActive(true);
     }
     public void SelectMonthMissionType(Toggle tog)
     {
         _newMissionType = TaskUnit.Month;
         monthSelectObj.SetActive(tog.isOn);
+        missionRepeatTypeObj.SetActive(true);
     }
     public void SelectPersonalMissionType(Toggle tog)
     {
         _newMissionType = TaskUnit.Personal;
+        missionRepeatTypeObj.SetActive(false);
     }
     public void Select_Month_NDay(Toggle tog)
     {
