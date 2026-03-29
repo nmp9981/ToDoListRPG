@@ -31,6 +31,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private MissionDeleteUI _missionDeleteUI;
 
     private Mission _selectMisson;
+    public MissionInfo _deleteMissionSoon;
 
     static void Init()
     {
@@ -151,6 +152,7 @@ public class UIManager : MonoBehaviour
     }
     public void OpenDeletelUI(MissionInfo mission)
     {
+        _deleteMissionSoon = mission;
         _missionDeleteUI.gameObject.SetActive(true);
     }
     public void CloseDeleteUI()
