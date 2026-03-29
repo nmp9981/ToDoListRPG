@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -14,9 +15,10 @@ public class MissionInfo : MonoBehaviour
     public Mission mission;
     public string missionDetail;
     public TaskUnit missionUnit;
-    public float dueTime;//마감 기한
+    public float dueTime;//마감 기한(실시간)
     public bool isComplete = false;//미션 완료 여부
     public int decreaseHP;//감소 HP
+    public string deadlineSecond;//마감 기한(초)
 
     [Header("UI")]
     [SerializeField] private GameObject repeatTextObj;
@@ -70,6 +72,11 @@ public class MissionInfo : MonoBehaviour
         repeatTextObj.SetActive(mission.isRepeat);
     }
 
+    public void SetDeadline()
+    {
+        deadlineSecond = DateTime.Now.AddSeconds(dueTime).ToString();
+    }
+
     /// <summary>
     /// 남은 시간 보이기
     /// </summary>
@@ -106,5 +113,12 @@ public class MissionInfo : MonoBehaviour
     public void ShowMissonDetail()
     {
         UIManager.UIInstance.OpenDetailUI(this);
+    }
+    /// <summary>
+    /// 미션 삭제
+    /// </summary>
+    public void DeleteMission()
+    {
+        UIManager.UIInstance.OpenDeletelUI(this);
     }
 }

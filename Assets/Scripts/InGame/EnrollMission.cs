@@ -123,6 +123,7 @@ public class EnrollMission : MonoBehaviour
         _newMissionInfo.mission.isRepeat = (_newMissionType != TaskUnit.Personal)? _isRepeat.isOn:false;
         _newMissionInfo.missionDetail = _missionDetailText.text;
         _newMissionInfo.dueTime = SetDueTime(_newMissionType);
+        _newMissionInfo.SetDeadline();
         //_deadlineText.text = CalTimeUtility.NumToTime(_newMissionInfo.dueTime);
 
         //미션 생성

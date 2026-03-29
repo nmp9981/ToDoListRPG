@@ -27,7 +27,8 @@ public class UIManager : MonoBehaviour
 
     [Header("UI오브젝트")]
     [SerializeField] private MissionCompleteUI _missionCompleteUI;
-    [SerializeField] private MissionDetailUI _missionDetailUI; 
+    [SerializeField] private MissionDetailUI _missionDetailUI;
+    [SerializeField] private MissionDeleteUI _missionDeleteUI;
 
     private Mission _selectMisson;
 
@@ -147,5 +148,13 @@ public class UIManager : MonoBehaviour
     public void CloseDetailUI()
     {
         _missionDetailUI.gameObject.SetActive(false);
+    }
+    public void OpenDeletelUI(MissionInfo mission)
+    {
+        _missionDeleteUI.gameObject.SetActive(true);
+    }
+    public void CloseDeleteUI()
+    {
+        _missionDeleteUI.gameObject.SetActive(false);
     }
 }
