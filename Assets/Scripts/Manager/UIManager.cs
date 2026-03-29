@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
 
     [Header("UI오브젝트")]
     [SerializeField] private MissionCompleteUI _missionCompleteUI;
+    [SerializeField] private MissionDetailUI _missionDetailUI; 
 
     private Mission _selectMisson;
 
@@ -137,5 +138,14 @@ public class UIManager : MonoBehaviour
         var player = GameManager.Instance._player;
         player.GetReward(_selectMisson.getExp, _selectMisson.getMoney);
         CloseCompleteUI();
+    }
+    public void OpenDetailUI(MissionInfo mission)
+    {
+        _missionDetailUI.gameObject.SetActive(true);
+        _missionDetailUI.ShowDetail(mission);
+    }
+    public void CloseDetailUI()
+    {
+        _missionDetailUI.gameObject.SetActive(false);
     }
 }

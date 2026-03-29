@@ -76,7 +76,7 @@ public class MissionInfo : MonoBehaviour
     void ShowDeadline()
     {
         dueTime -= Time.deltaTime;
-
+        
         int dueDay = (int)dueTime / 86400;
         int restHour = (int)dueTime % 86400;
         int dueHour = (int)restHour / 3600;
@@ -105,6 +105,6 @@ public class MissionInfo : MonoBehaviour
     /// </summary>
     public void ShowMissonDetail()
     {
-
+        UIManager.UIInstance.OpenDetailUI(this);
     }
 }

@@ -155,16 +155,20 @@ public class EnrollMission : MonoBehaviour
     /// <returns></returns>
     float SetDueTime(TaskUnit unit)
     {
-        int hour = int.Parse(_missionDueHour.text);
-        int minute = int.Parse( _missionDueMinute.text);
         int restTime = 0;
+        int hour = 0;
+        int minute = 0;
 
         switch (unit)
         {
             case TaskUnit.Day:
+                hour = int.Parse(_missionDueHour.text);
+                minute = int.Parse(_missionDueMinute.text);
                 restTime = CalTimeUtility.DiffTime_Day(hour, minute);
                 break;
             case TaskUnit.Week:
+                hour = int.Parse(_missionDueHour.text);
+                minute = int.Parse(_missionDueMinute.text);
                 restTime = CalTimeUtility.DiffTime_Week(hour, minute, _weekToggleGroup.GetFirstActiveToggle());
                 break;
             case TaskUnit.Month:
