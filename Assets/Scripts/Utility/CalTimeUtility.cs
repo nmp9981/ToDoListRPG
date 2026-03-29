@@ -141,6 +141,36 @@ public static class CalTimeUtility
         int day = (curTime.Day >= curMonthDay) ? nextMonthDay : curMonthDay;//이미 이번달 날짜 지났는지 여부
         return DiffTime_Month(inputHour, inputMinute, day);
     }
+    /// <summary>
+    /// 개인 미션 - 입력 날짜
+    /// </summary>
+    /// <param name="inputHour"></param>
+    /// <param name="inputMinute"></param>
+    /// <param name="inputDay"></param>
+    /// <returns></returns>
+    public static int DiffTime_Full(DateTime inputDate)
+    {
+        DateTime curTime = DateTime.Now;
+        DateTime curTimeDay = curTime.Date;
+        DateTime inputDateDay = new DateTime(inputDate.Year, inputDate.Month, inputDate.Day);
+        int diffDay_TimeSpan = (inputDateDay - curTimeDay).Days;//일수 차
+       
+        //초차
+        int diffSecond = minutesUnit - curTime.Second;
+        //분차
+        int diffMinute = inputDate.Minute - curTime.Minute - 1;
+        //시차
+        int diffHour = (diffMinute < 0) ? inputDate.Hour - 1 - curTime.Hour :inputDate.Hour - curTime.Hour;
+        //일차
+        int diffDay = (diffHour < 0) ? diffDay_TimeSpan - 1 : diffDay_TimeSpan;
+   
+        //받아내림 보정
+        diffMinute = (diffMinute < 0) ? diffMinute + minutesUnit : diffMinute;
+        diffHour = (diffHour < 0) ? diffHour + 24 : diffHour;
+
+        //총 시간
+        return diffSecond + minutesUnit * diffMinute + hourUnit * diffHour + dayUnit * diffDay;
+    }
 
     /// <summary>
     /// 각 달별 일 수 

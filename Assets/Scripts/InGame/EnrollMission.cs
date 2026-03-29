@@ -24,6 +24,13 @@ public class EnrollMission : MonoBehaviour
     [SerializeField] TMP_InputField _missionDueDay;
     [SerializeField] TMP_InputField _missionDueWeekN;
 
+    [Header("개인 미션 날짜 입력")]
+    [SerializeField] TMP_InputField _personalmissionDueYearInput;
+    [SerializeField] TMP_InputField _personalmissionDueMonthInput;
+    [SerializeField] TMP_InputField _personalmissionDueDayInput;
+    [SerializeField] TMP_InputField _personalmissionDueHourInput;
+    [SerializeField] TMP_InputField _personalmissionDueMinuteInput;
+
     [Header("미션 기한")]
     [SerializeField] ToggleGroup _weekToggleGroup;
     [SerializeField] ToggleGroup _monthToggleGroup;
@@ -36,6 +43,7 @@ public class EnrollMission : MonoBehaviour
     [SerializeField] GameObject daySelect_MonthObj;
     [SerializeField] GameObject weekN_MonthObj;
     [SerializeField] GameObject missionRepeatTypeObj;
+    [SerializeField] GameObject personalMissionDueAreaObj;
 
     [Header("미션 유형별 생성 위치")]
     [SerializeField] Transform _dayContent;
@@ -49,6 +57,7 @@ public class EnrollMission : MonoBehaviour
         weekSelectObj.SetActive(false);
         monthSelectObj.SetActive(false);
         daySelect_MonthObj.SetActive(false);
+        personalMissionDueAreaObj.SetActive(false);
     }
 
     /// <summary>
@@ -77,6 +86,7 @@ public class EnrollMission : MonoBehaviour
     {
         _newMissionType = TaskUnit.Personal;
         missionRepeatTypeObj.SetActive(false);
+        personalMissionDueAreaObj.SetActive(tog.isOn);
     }
     public void Select_Month_NDay(Toggle tog)
     {
@@ -110,7 +120,7 @@ public class EnrollMission : MonoBehaviour
         _newMissionInfo.mission.Title = _missionNameText.text;
         _newMissionInfo.mission.getExp = int.Parse(_missionGetExp.text);
         _newMissionInfo.mission.getMoney = int.Parse(_missionGetMoney.text);
-        _newMissionInfo.mission.isRepeat = _isRepeat.isOn;
+        _newMissionInfo.mission.isRepeat = (_newMissionType != TaskUnit.Personal)? _isRepeat.isOn:false;
         _newMissionInfo.missionDetail = _missionDetailText.text;
         _newMissionInfo.dueTime = SetDueTime(_newMissionType);
         //_deadlineText.text = CalTimeUtility.NumToTime(_newMissionInfo.dueTime);
@@ -170,7 +180,13 @@ public class EnrollMission : MonoBehaviour
                 }
                 break;
             case TaskUnit.Personal:
-
+                int yearInput = int.Parse(_personalmissionDueYearInput.text);
+                int monthInput = int.Parse(_personalmissionDueMonthInput.text);
+                int dayInput = int.Parse(_personalmissionDueDayInput.text);
+                int hourInput = int.Parse(_personalmissionDueHourInput.text);
+                int minuteInput = int.Parse(_personalmissionDueMonthInput.text);
+                DateTime inputDate = new DateTime(yearInput, monthInput, dayInput, hourInput, minuteInput,0);
+                restTime = CalTimeUtility.DiffTime_Full(inputDate);
                 break;
             default:
                 break;
