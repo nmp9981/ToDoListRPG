@@ -120,9 +120,10 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// 미션 완료 UI 열기
     /// </summary>
-    public void OpenCompleteUI(Mission mission)
+    public void OpenCompleteUI(Mission mission, MissionInfo missionInfo)
     {
         _selectMisson = mission;
+        _deleteMissionSoon = missionInfo;
         _missionCompleteUI.gameObject.SetActive(true);
     }
     /// <summary>
@@ -139,6 +140,17 @@ public class UIManager : MonoBehaviour
     {
         var player = GameManager.Instance._player;
         player.GetReward(_selectMisson.getExp, _selectMisson.getMoney);
+        //반복 여부에 따라 삭제할지 결정
+        if (!_selectMisson.isRepeat)//반복 아니면 삭제
+        {
+            Destroy(_deleteMissionSoon.gameObject);
+        }
+        else
+        {
+            //남은 시간 재설정
+            _deleteMissionSoon.SetRepeatTime();
+        }
+        _deleteMissionSoon.isComplete = false;
         CloseCompleteUI();
     }
     public void OpenDetailUI(MissionInfo mission)
@@ -157,6 +169,7 @@ public class UIManager : MonoBehaviour
     }
     public void CloseDeleteUI()
     {
+        _deleteMissionSoon = null;
         _missionDeleteUI.gameObject.SetActive(false);
     }
 }

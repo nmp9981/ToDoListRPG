@@ -78,6 +78,28 @@ public class MissionInfo : MonoBehaviour
     }
 
     /// <summary>
+    /// 반복 시간 재설정
+    /// </summary>
+    public void SetRepeatTime()
+    {
+        switch (missionUnit)
+        {
+            case TaskUnit.Day:
+                dueTime += CalTimeUtility.dayUnit;
+                break;
+            case TaskUnit.Week:
+                dueTime += (CalTimeUtility.dayUnit*7);
+                break;
+            case TaskUnit.Month:
+                DateTime now  = DateTime.Now;
+                dueTime += (CalTimeUtility.dayUnit*CalTimeUtility.AddMonthDay(now.Month, now.Year));
+                break;
+            default:
+                break;
+        }
+    }
+
+    /// <summary>
     /// 남은 시간 보이기
     /// </summary>
     void ShowDeadline()
@@ -104,7 +126,7 @@ public class MissionInfo : MonoBehaviour
     public void MissonComplete()
     {
         isComplete = true;
-        UIManager.UIInstance.OpenCompleteUI(mission);
+        UIManager.UIInstance.OpenCompleteUI(mission,this);
     }
     
     /// <summary>

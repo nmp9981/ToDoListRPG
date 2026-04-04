@@ -4,9 +4,10 @@ using UnityEngine.UI;
 
 public static class CalTimeUtility
 {
-    const int minutesUnit = 60;
-    const int hourUnit = 3600;
-    const int dayUnit = 86400;
+    public const int minutesUnit = 60;
+    public const int hourUnit = 3600;
+    public const int dayUnit = 86400;
+
     /// <summary>
     /// 숫자(초)를 시간으로
     /// </summary>

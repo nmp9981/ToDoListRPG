@@ -116,6 +116,7 @@ public class EnrollMission : MonoBehaviour
         MissionInfo _newMissionInfo = _newMissionObj.GetComponent<MissionInfo>();
 
         //미션 정보 등록
+        _newMissionInfo.isComplete = false;
         _newMissionInfo.missionUnit = _newMissionType;
         _newMissionInfo.mission.Title = _missionNameText.text;
         _newMissionInfo.mission.getExp = int.Parse(_missionGetExp.text);
