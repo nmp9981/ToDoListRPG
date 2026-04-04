@@ -30,6 +30,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private MissionDetailUI _missionDetailUI;
     [SerializeField] private MissionDeleteUI _missionDeleteUI;
 
+    [Header("메세지")]
+    [SerializeField] private TextMeshProUGUI _messageText;
+
+    [Header("선택한 미션")]
     private Mission _selectMisson;
     public MissionInfo _deleteMissionSoon;
 
@@ -83,6 +87,7 @@ public class UIManager : MonoBehaviour
                     break;
             }
         }
+        _messageText.text = string.Empty;
     }
 
     /// <summary>
@@ -171,5 +176,14 @@ public class UIManager : MonoBehaviour
     {
         _deleteMissionSoon = null;
         _missionDeleteUI.gameObject.SetActive(false);
+    }
+    public void ShowMessage(string msg)
+    {
+        _messageText.text = msg;
+        Invoke("DeleteMessage",1f);
+    }
+    void DeleteMessage()
+    {
+        _messageText.text = string.Empty;
     }
 }

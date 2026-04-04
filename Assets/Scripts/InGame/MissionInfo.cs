@@ -35,6 +35,7 @@ public class MissionInfo : MonoBehaviour
     private void Update()
     {
         ShowDeadline();
+        FailMissonCheck();
     }
 
     /// <summary>
@@ -45,16 +46,16 @@ public class MissionInfo : MonoBehaviour
         switch (missionUnit)
         {
             case TaskUnit.Day:
-                decreaseHP = 20;
+                decreaseHP = 90;
                 break;
             case TaskUnit.Week:
-                decreaseHP = 80;
+                decreaseHP = 300;
                 break;
             case TaskUnit.Month:
-                decreaseHP = 400;
+                decreaseHP = 700;
                 break;
             case TaskUnit.Personal:
-                decreaseHP = 100;
+                decreaseHP = 110;
                 break;
             default:
                 break;
@@ -119,7 +120,17 @@ public class MissionInfo : MonoBehaviour
         }
         else dueTextUI.text = $" {dueHour} : {dueMinute} : {dueSecond}";
     }
+    /// <summary>
+    /// 미션 실패
+    /// </summary>
+    public void FailMissonCheck()
+    {
+        if (dueTime > 0) return;
 
+        GameManager.Instance._player.DecreaseHP(decreaseHP);
+        GameManager.Instance._failMissionList.Add(this);
+        Destroy(this.gameObject);
+    }
     /// <summary>
     /// 미션 완료
     /// </summary>

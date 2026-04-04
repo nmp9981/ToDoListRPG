@@ -46,6 +46,7 @@ public class PlayerInfo : MonoBehaviour
     private int _playerFullHP = 1000;
     private int _playerFullExp;
     private int _playerIncreaseHP = 500;
+    private int _playerDecreaseEXPPercent = 30;
 
     public int PlayerLV { get { return _playerLv; } set { _playerLv = value; } }
     public int PlayerSymbolIndex { get { return _playerSymbolIndex; } set { _playerSymbolIndex = value; } }
@@ -54,6 +55,7 @@ public class PlayerInfo : MonoBehaviour
     public int PlayerCurrentExp { get { return _playerCurrentEXP; } set { _playerCurrentEXP = value; } }
     public int PlayerFullHP { get { return _playerFullHP; } set { _playerFullHP = value; } }
     public int PlayerFullExp { get { return _playerFullExp; } set { _playerFullExp = value; } }
+    public int PlayerDecreaseExpPercent { get { return _playerDecreaseEXPPercent; } }
 
     private void Awake()
     {
@@ -69,7 +71,7 @@ public class PlayerInfo : MonoBehaviour
         PlayerHasMoney = 1000;
         PlayerCurrentHP = PlayerFullHP;
         PlayerCurrentExp = 20;
-        PlayerFullExp = 800;
+        PlayerFullExp = 200;
         PlayerSymbolIndex = 0;
 
         UIManager.UIInstance.UpdateUI();
@@ -92,9 +94,9 @@ public class PlayerInfo : MonoBehaviour
         {
             var gm = GameManager.Instance;
             PlayerCurrentExp -= PlayerFullExp;
-            PlayerFullExp = (PlayerFullExp * gm.RequireExpRate) / 100;
-            PlayerCurrentHP = Mathf.Min(PlayerFullHP, PlayerCurrentHP+_playerIncreaseHP);
             PlayerLV += 1;
+            PlayerFullExp = gm.CalRequireExp(PlayerLV);
+            PlayerCurrentHP = Mathf.Min(PlayerFullHP, PlayerCurrentHP+_playerIncreaseHP);
 
             //칭호 변경
             if (PlayerLV >= gm._playerLvSymbolImage[PlayerSymbolIndex]._nextSymbolLv
@@ -102,5 +104,66 @@ public class PlayerInfo : MonoBehaviour
         }
         //UI 반영
         UIManager.UIInstance.UpdateUI();
+        UIManager.UIInstance.ShowMessage("레벨 업!!");
+    }
+    /// <summary>
+    /// 레벨 다운
+    /// </summary>
+    public void PlayerLevelDown(int exp)
+    {
+        var gm = GameManager.Instance;
+        PlayerCurrentHP = _playerIncreaseHP;
+        //10미만에서는 감소X
+        if (PlayerLV < 10)
+        {
+            UIManager.UIInstance.UpdateUI();
+            return;
+        }
+
+        //레벨 다운
+        PlayerLV -= 1;
+        PlayerFullExp = gm.CalRequireExp(PlayerLV);
+        PlayerCurrentExp = PlayerFullExp + exp;
+
+        //칭호 변경
+        if (PlayerLV < gm._playerLvSymbolImage[PlayerSymbolIndex]._nextSymbolLv
+            && PlayerSymbolIndex > 0) PlayerSymbolIndex -= 1;
+        //UI 반영
+        UIManager.UIInstance.UpdateUI();
+    }
+    /// <summary>
+    /// HP 감소
+    /// </summary>
+    /// <param name="amountHP"></param>
+    public void DecreaseHP(int amountHP)
+    {
+        PlayerCurrentHP = Mathf.Max(0, PlayerCurrentHP - amountHP);
+
+        if (PlayerCurrentHP <= 0)
+        {
+            DeadPlayer();
+        }
+        else
+        {
+            UIManager.UIInstance.UpdateUI();
+            UIManager.UIInstance.ShowMessage("미션 실패로 HP가 감소했습니다.");
+        }
+    }
+    /// <summary>
+    /// 사망 처리
+    /// </summary>
+    public void DeadPlayer()
+    {
+        int amountDecrease = (PlayerFullExp * _playerDecreaseEXPPercent) / 100;//감소량
+        PlayerCurrentExp -= amountDecrease;
+        PlayerHasMoney -= (PlayerHasMoney/10); 
+
+        if (PlayerCurrentExp < 0)
+        {
+            PlayerLevelDown(PlayerCurrentExp);
+        }
+        else UIManager.UIInstance.UpdateUI();
+
+        UIManager.UIInstance.ShowMessage("캐릭터가 사망했습니다.");
     }
 }
