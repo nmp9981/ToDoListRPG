@@ -38,7 +38,8 @@ public class GameManager : MonoBehaviour
 
         if (lv < 11) return lv * 200;
 
-        return 2000*(int)Mathf.Pow(RequireExpRate, lv-10);
+        float rate = (float)_requireExpRate / 100f;
+        return 2000*(int)Mathf.Pow(rate, lv-10);
     }
     #region µ¥ÀÌÅÍ
     public PlayerInfo _player;

@@ -138,6 +138,14 @@ public class EnrollMission : MonoBehaviour
         _newMissionInfo.SetDeadline();
         //_deadlineText.text = CalTimeUtility.NumToTime(_newMissionInfo.dueTime);
 
+        //날짜 검사에서 미달시 미션생성 X
+        if (Fail_InspectInputTime(_newMissionType))
+        {
+            UIManager.UIInstance.ShowMessage("올바른 날짜를 입력하시오.", Color.black);
+            Destroy(_newMissionObj);
+            return;
+        }
+
         //미션 생성
         switch (_newMissionType)
         {
@@ -159,7 +167,8 @@ public class EnrollMission : MonoBehaviour
         //UI 공개
         _newMissionInfo.ShowMissionUI();
 
-        gameObject.SetActive(false);
+        //미션 등록 창 닫기
+        Close_EnrollMisison();
     }
 
     /// <summary>
@@ -209,5 +218,66 @@ public class EnrollMission : MonoBehaviour
                 break;
         }
         return restTime;
+    }
+
+    //입력 검사
+    bool Fail_InspectInputTime(TaskUnit unit)
+    {
+        int hour = 0;
+        int minute = 0;
+        int day = 0;
+        int dayPermission = 0;
+        int weekNum = 0;
+        int month = 0;
+        int year = DateTime.Now.Year;
+
+        switch (unit)
+        {
+            case TaskUnit.Day:
+                hour = int.Parse(_missionDueHour.text);
+                minute = int.Parse(_missionDueMinute.text);
+                break;
+            case TaskUnit.Week:
+                hour = int.Parse(_missionDueHour.text);
+                minute = int.Parse(_missionDueMinute.text);
+                break;
+            case TaskUnit.Month:
+                if (_newMonthType == MonthType.NDay)
+                {
+                    day = int.Parse(_missionDueDay.text);
+                }
+                else if (_newMonthType == MonthType.KWeek)
+                {
+                    weekNum = int.Parse(_missionDueWeekN.text);
+                }
+                break;
+            case TaskUnit.Personal:
+                year = int.Parse(_personalmissionDueYearInput.text);
+                month = int.Parse(_personalmissionDueMonthInput.text);
+                dayPermission = int.Parse(_personalmissionDueDayInput.text);
+                hour = int.Parse(_personalmissionDueHourInput.text);
+                minute = int.Parse(_personalmissionDueMonthInput.text);
+                break;
+            default:
+                break;
+        }
+
+        //검사
+        if (hour >= 24 || minute >= 60) return true;
+        if (day > 31 || month > 12) return true;
+        if (weekNum > 4) return true;
+        int nowYear = DateTime.Now.Year;
+        if (year < nowYear || year > nowYear + 200) return true;
+        int maxDay = CalTimeUtility.AddMonthDay(month,year);
+        if(dayPermission > maxDay) return true;
+
+        return false;
+    }
+    /// <summary>
+    /// 미션 등록 창 닫기
+    /// </summary>
+    public void Close_EnrollMisison()
+    {
+        gameObject.SetActive(false);
     }
 }
