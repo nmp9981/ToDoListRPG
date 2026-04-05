@@ -1,6 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
+/// <summary>
+/// 플레이 모드
+/// </summary>
+public enum PlayMode
+{
+    General,
+    Concentration,
+    Count
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -47,8 +56,10 @@ public class GameManager : MonoBehaviour
     public List<SymbolInfo> _playerLvSymbolImage = new();
     public List<MissionInfo> _failMissionList = new();
 
+    [SerializeField] private PlayMode _playMode = PlayMode.General;//플레이 모드
     private int _requireExpRate = 105;//경험치 배율
     private int _symbolMaxCount = 20;//칭호 개수
+    public PlayMode PlayMode { get { return _playMode; } set { _playMode = value; } }
     public int RequireExpRate { get { return _requireExpRate; } }
     public int SymbolMaxCount { get { return _symbolMaxCount; } }
     #endregion

@@ -29,7 +29,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private MissionCompleteUI _missionCompleteUI;
     [SerializeField] private MissionDetailUI _missionDetailUI;
     [SerializeField] private MissionDeleteUI _missionDeleteUI;
-
+    [SerializeField] private SettingUI _settingUI;
+ 
     [Header("메세지")]
     [SerializeField] private TextMeshProUGUI _messageText;
 
@@ -55,6 +56,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         TextBinding();
+        _settingUI.Change_GeneralMode();
     }
 
     void TextBinding()
@@ -158,6 +160,7 @@ public class UIManager : MonoBehaviour
         _deleteMissionSoon.isComplete = false;
         CloseCompleteUI();
     }
+    #region 미션 세부 UI
     public void OpenDetailUI(MissionInfo mission)
     {
         _missionDetailUI.gameObject.SetActive(true);
@@ -167,6 +170,9 @@ public class UIManager : MonoBehaviour
     {
         _missionDetailUI.gameObject.SetActive(false);
     }
+    #endregion
+
+    #region 삭제 UI
     public void OpenDeletelUI(MissionInfo mission)
     {
         _deleteMissionSoon = mission;
@@ -177,6 +183,9 @@ public class UIManager : MonoBehaviour
         _deleteMissionSoon = null;
         _missionDeleteUI.gameObject.SetActive(false);
     }
+    #endregion
+
+    #region 메세지
     public void ShowMessage(string msg, Color color)
     {
         _messageText.text = msg;
@@ -187,4 +196,16 @@ public class UIManager : MonoBehaviour
     {
         _messageText.text = string.Empty;
     }
+    #endregion
+
+    #region 세팅 창
+    public void OpenSettingUI()
+    {
+        _settingUI.gameObject.SetActive(true);
+    }
+    public void CloseSettingUI()
+    {
+        _settingUI.gameObject.SetActive(false);
+    }
+    #endregion
 }
