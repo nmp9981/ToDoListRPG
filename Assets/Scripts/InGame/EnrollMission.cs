@@ -167,6 +167,9 @@ public class EnrollMission : MonoBehaviour
         //UI 공개
         _newMissionInfo.ShowMissionUI();
 
+        //타이머 시작
+        _newMissionInfo.StartTimer();
+
         //미션 등록 창 닫기
         Close_EnrollMisison();
     }

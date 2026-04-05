@@ -77,6 +77,14 @@ public class MissionInfo : MonoBehaviour
     {
         deadlineSecond = DateTime.Now.AddSeconds(dueTime).ToString();
     }
+    public void StartTimer()
+    {
+        InvokeRepeating("FlowTime", 1f,1f);
+    }
+    void FlowTime()
+    {
+        dueTime -= 1;
+    }
 
     /// <summary>
     /// 반복 시간 재설정
@@ -105,8 +113,6 @@ public class MissionInfo : MonoBehaviour
     /// </summary>
     void ShowDeadline()
     {
-        dueTime -= Time.deltaTime;
-        
         int dueDay = (int)dueTime / 86400;
         int restHour = (int)dueTime % 86400;
         int dueHour = (int)restHour / 3600;
