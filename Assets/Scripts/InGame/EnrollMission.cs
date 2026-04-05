@@ -108,8 +108,19 @@ public class EnrollMission : MonoBehaviour
         //미션명 검사
         if (_missionNameText.text == string.Empty) return;
 
+        //보상 입력 검사
+        if (_missionGetExp.text == string.Empty || _missionGetMoney.text == string.Empty)
+        {
+            UIManager.UIInstance.ShowMessage("보상을 입력해주세요", Color.black);
+            return;
+        }
+
         //보상 범위 검사
-        if (_missionGetExp.text.Length > 7 || _missionGetMoney.text.Length > 7) return;
+        if (_missionGetExp.text.Length > 7 || _missionGetMoney.text.Length > 7)
+        {
+            UIManager.UIInstance.ShowMessage("최대 7자리까지만 입력할 수 있습니다.", Color.black);
+            return;
+        }
 
         //미션 오브젝트
         GameObject _newMissionObj = Instantiate(GameManager.Instance._missionPrefab);

@@ -104,7 +104,7 @@ public class PlayerInfo : MonoBehaviour
         }
         //UI 반영
         UIManager.UIInstance.UpdateUI();
-        UIManager.UIInstance.ShowMessage("레벨 업!!");
+        UIManager.UIInstance.ShowMessage("레벨 업!!", Color.white);
     }
     /// <summary>
     /// 레벨 다운
@@ -146,7 +146,7 @@ public class PlayerInfo : MonoBehaviour
         else
         {
             UIManager.UIInstance.UpdateUI();
-            UIManager.UIInstance.ShowMessage("미션 실패로 HP가 감소했습니다.");
+            UIManager.UIInstance.ShowMessage("미션 실패로 HP가 감소했습니다.", Color.white);
         }
     }
     /// <summary>
@@ -164,6 +164,6 @@ public class PlayerInfo : MonoBehaviour
         }
         else UIManager.UIInstance.UpdateUI();
 
-        UIManager.UIInstance.ShowMessage("캐릭터가 사망했습니다.");
+        UIManager.UIInstance.ShowMessage("캐릭터가 사망했습니다.", Color.white);
     }
 }

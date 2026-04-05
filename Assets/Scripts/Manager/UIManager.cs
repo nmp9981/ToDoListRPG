@@ -177,9 +177,10 @@ public class UIManager : MonoBehaviour
         _deleteMissionSoon = null;
         _missionDeleteUI.gameObject.SetActive(false);
     }
-    public void ShowMessage(string msg)
+    public void ShowMessage(string msg, Color color)
     {
         _messageText.text = msg;
+        _messageText.color = color;
         Invoke("DeleteMessage",1f);
     }
     void DeleteMessage()
