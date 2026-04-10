@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class WhitelistManager : MonoBehaviour
 {
@@ -11,6 +15,16 @@ public class WhitelistManager : MonoBehaviour
 
     public List<string> GetProcessList() => _data.allowProcessList;
     public List<string> GetUrlList() => _data.allowURLList;
+
+    [SerializeField] private GameObject _listItemPrefab;
+   
+    [Header("프로세스 섹션")]
+    [SerializeField] private TMP_InputField _processInput;
+    [SerializeField] private Transform _processContent;
+
+    [Header("URL 섹션")]
+    [SerializeField] private TMP_InputField _urlInput;
+    [SerializeField] private Transform _urlContent;
 
     private void Awake()
     {
@@ -47,12 +61,16 @@ public class WhitelistManager : MonoBehaviour
     /// 프로그램 추가
     /// </summary>
     /// <param name="processName"></param>
-    public void AddProcess(string processName)
+    public void AddProcess()
     {
-        string key = Normalize(processName);
+        string input = _processInput.text;
+        if (input == string.Empty) return;
+
+        string key = Normalize(input);
         if (!_data.allowProcessList.Contains(key))
         {
             _data.allowProcessList.Add(key);
+            SpawnItem(_processContent, key);
             Save();
         }
     }
@@ -60,10 +78,11 @@ public class WhitelistManager : MonoBehaviour
     /// 프로그램 제거
     /// </summary>
     /// <param name="processName"></param>
-    public void RemoveProcess(string processName)
+    public void RemoveProcess(string processName, GameObject gm)
     {
         _data.allowProcessList.Remove(Normalize(processName));
         Save();
+        Destroy(gm);
     }
     #endregion
 
@@ -72,12 +91,16 @@ public class WhitelistManager : MonoBehaviour
     /// 프로그램 추가
     /// </summary>
     /// <param name="url"></param>
-    public void AddUrl(string url)
+    public void AddUrl()
     {
-        string key = NormalizeUrl(url);
+        string input = _urlInput.text;
+        if (input == string.Empty) return;
+
+        string key = NormalizeUrl(input);
         if (!_data.allowURLList.Contains(key))
         {
             _data.allowURLList.Add(key);
+            SpawnItem(_urlContent, key);
             Save();
         }
     }
@@ -85,10 +108,26 @@ public class WhitelistManager : MonoBehaviour
     /// 프로그램 제거
     /// </summary>
     /// <param name="url"></param>
-    public void RemoveUrl(string url)
+    public void RemoveUrl(string url, GameObject gm)
     {
         _data.allowURLList.Remove(NormalizeUrl(url));
         Save();
+        Destroy(gm);
+    }
+    #endregion
+
+    #region 오브젝트 생성
+    private void SpawnItem(Transform parent, string label)
+    {
+        var go = Instantiate(_listItemPrefab, parent);
+
+        // 텍스트 설정
+        var text = go.GetComponentInChildren<TMP_Text>();
+        if (text != null) text.text = label;
+
+        // 삭제 버튼 설정
+        var btn = go.GetComponentInChildren<Button>();
+        if (btn != null) btn.onClick.AddListener(delegate { RemoveUrl(label, go); });
     }
     #endregion
 
