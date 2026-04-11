@@ -34,6 +34,7 @@ public class WhitelistManager : MonoBehaviour
 
         _savePath = Path.Combine(Application.persistentDataPath, "whitelist.json");
         Load();
+        _data.allowURLList.Clear();
     }
 
     #region 로드와 저장
@@ -97,12 +98,9 @@ public class WhitelistManager : MonoBehaviour
         if (input == string.Empty) return;
 
         string key = NormalizeUrl(input);
-        if (!_data.allowURLList.Contains(key))
-        {
-            _data.allowURLList.Add(key);
-            SpawnItem(_urlContent, key);
-            Save();
-        }
+        _data.allowURLList.Add(key);
+        SpawnItem(_urlContent, key);
+        Save();
     }
     /// <summary>
     /// 프로그램 제거
@@ -113,6 +111,36 @@ public class WhitelistManager : MonoBehaviour
         _data.allowURLList.Remove(NormalizeUrl(url));
         Save();
         Destroy(gm);
+    }
+    #endregion
+
+    #region 검사
+    /// <summary>
+    /// 허용된 프로그램인가?
+    /// </summary>
+    /// <returns></returns>
+    public bool IsContainAllowUProcess(string program)
+    {
+        foreach (string factor in _data.allowProcessList)
+        {
+            if (factor.Contains(program)) return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 허용된 url인가?
+    /// </summary>
+    /// <returns></returns>
+    public bool IsContainAllowUrl(string url)
+    {
+        if (_data.allowURLList.Count == 0) return false;//허용 url이 없음
+
+        foreach(string factor in _data.allowURLList)
+        {
+            if (url.Contains(factor)) return true;//하용 url에 있음
+        }
+        return false;
     }
     #endregion
 
