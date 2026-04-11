@@ -3,7 +3,7 @@ using System.Text;
 using System;
 using UnityEngine;
 using System.Diagnostics;
-using Unity.VisualScripting;
+
 
 public class AppSurveillance : MonoBehaviour
 {
@@ -18,13 +18,16 @@ public class AppSurveillance : MonoBehaviour
     private void Start()
     {
         InvokeRepeating(nameof(InspectUrl), 1f, 3f);
+        InvokeRepeating(nameof(InspectUrl), 2f, 3f);
     }
-
+    /// <summary>
+    /// URL 감시
+    /// </summary>
     void InspectUrl()
     {
         if(GameManager.Instance.PlayMode == PlayMode.Concentration)
         {
-            string url = GetCurrentUrl();
+            string url = GetCurrentUrl(true);
             if (url == string.Empty) return;
 
             if (!WhitelistManager.Instance.IsContainAllowUrl(url))
@@ -33,8 +36,28 @@ public class AppSurveillance : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 프로그램 감시
+    /// </summary>
+    void InspectProgram()
+    {
+        if (GameManager.Instance.PlayMode == PlayMode.Concentration)
+        {
+            string url = GetCurrentUrl(false);
+            if (url == string.Empty) return;
 
-    public string GetCurrentUrl()
+            if (!WhitelistManager.Instance.IsContainAllowUProcess(url))
+            {
+                GameManager.Instance._player.DecreaseHP(1);
+            }
+        }
+    }
+    /// <summary>
+    /// URL or 프로그램 가져오기
+    /// </summary>
+    /// <param name="isURL"></param>
+    /// <returns></returns>
+    public string GetCurrentUrl(bool isURL)
     {
         try
         {
@@ -47,9 +70,24 @@ public class AppSurveillance : MonoBehaviour
 
             // 브라우저인지 확인
             bool isBrowser = Array.Exists(_browsers, b => b == procName);
-            if (!isBrowser)
+
+            if (isURL)//URL 반환해야함
             {
-                return string.Empty;
+                if (!isBrowser)//브라우저가 아님
+                {
+                    return string.Empty;
+                }
+            }
+            else//프로그램 반환해야함
+            {
+                if (isBrowser)//브라우저
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    return procName;
+                }
             }
 
             // PID를 PowerShell에 넘겨서 URL만 읽어오기

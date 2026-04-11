@@ -35,6 +35,7 @@ public class WhitelistManager : MonoBehaviour
         _savePath = Path.Combine(Application.persistentDataPath, "whitelist.json");
         Load();
         _data.allowURLList.Clear();
+        _data.allowProcessList.Clear();
     }
 
     #region 로드와 저장
@@ -68,12 +69,9 @@ public class WhitelistManager : MonoBehaviour
         if (input == string.Empty) return;
 
         string key = Normalize(input);
-        if (!_data.allowProcessList.Contains(key))
-        {
-            _data.allowProcessList.Add(key);
-            SpawnItem(_processContent, key);
-            Save();
-        }
+        _data.allowProcessList.Add(key);
+        SpawnItem(_processContent, key);
+        Save();
     }
     /// <summary>
     /// 프로그램 제거
@@ -121,6 +119,8 @@ public class WhitelistManager : MonoBehaviour
     /// <returns></returns>
     public bool IsContainAllowUProcess(string program)
     {
+        if (_data.allowProcessList.Count == 0) return false;//허용 프로그램이 없음
+
         foreach (string factor in _data.allowProcessList)
         {
             if (factor.Contains(program)) return true;
