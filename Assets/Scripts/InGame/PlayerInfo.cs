@@ -146,7 +146,7 @@ public class PlayerInfo : MonoBehaviour
         else
         {
             UIManager.UIInstance.UpdateUI();
-            UIManager.UIInstance.ShowMessage("미션 실패로 HP가 감소했습니다.", Color.white);
+            UIManager.UIInstance.ShowMessage("HP가 감소했습니다.", Color.red);
         }
     }
     /// <summary>

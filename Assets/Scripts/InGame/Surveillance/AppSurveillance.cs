@@ -17,8 +17,7 @@ public class AppSurveillance : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating(nameof(InspectUrl), 1f, 3f);
-        InvokeRepeating(nameof(InspectUrl), 2f, 3f);
+        InvokeRepeating(nameof(InspectUrl), 3f, 3f);
     }
     /// <summary>
     /// URL °¨½Ã
@@ -28,11 +27,21 @@ public class AppSurveillance : MonoBehaviour
         if(GameManager.Instance.PlayMode == PlayMode.Concentration)
         {
             string url = GetCurrentUrl(true);
-            if (url == string.Empty) return;
+            string prog = GetCurrentUrl(false);
 
-            if (!WhitelistManager.Instance.IsContainAllowUrl(url))
+            if (url != string.Empty)
             {
-                GameManager.Instance._player.DecreaseHP(1);
+                if (!WhitelistManager.Instance.IsContainAllowUrl(url))
+                {
+                    GameManager.Instance._player.DecreaseHP(3);
+                }
+            }
+            if (prog != string.Empty)
+            {
+                if (!WhitelistManager.Instance.IsContainAllowUProcess(prog))
+                {
+                    GameManager.Instance._player.DecreaseHP(3);
+                }
             }
         }
     }
