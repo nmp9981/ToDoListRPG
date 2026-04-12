@@ -105,7 +105,12 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void DecreaseConcentrateRestTime()
     {
-        if(GameManager.Instance.PlayMode == PlayMode.Concentration)
+        if (GameManager.Instance.PlayMode == PlayMode.General)
+        {
+            _concentrateRestTimeText.text = string.Empty;
+            return;
+        }
+        if (GameManager.Instance.PlayMode == PlayMode.Concentration)
         {
             GameManager.Instance.ConcentrateContinueTime -= Time.deltaTime;
             ShowRestTimeUI();
@@ -137,12 +142,6 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void ShowRestTimeUI()
     {
-        if(GameManager.Instance.PlayMode == PlayMode.General)
-        {
-            _concentrateRestTimeText.text = string.Empty;
-            return;
-        }
-
         int restInitTime = (int)GameManager.Instance.ConcentrateContinueTime;
         if (restInitTime<=-50)
         {
