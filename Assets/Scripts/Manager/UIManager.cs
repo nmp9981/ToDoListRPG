@@ -38,6 +38,9 @@ public class UIManager : MonoBehaviour
     private Mission _selectMisson;
     public MissionInfo _deleteMissionSoon;
 
+    [Header("집중 지속 시간")]
+    [SerializeField] private TextMeshProUGUI _concentrateRestTimeText;//남은 집중 시간
+
     static void Init()
     {
         if (_uiInstance == null)
@@ -57,6 +60,11 @@ public class UIManager : MonoBehaviour
     {
         TextBinding();
         _settingUI.Change_GeneralMode();
+    }
+
+    private void Update()
+    {
+        DecreaseConcentrateRestTime();
     }
 
     void TextBinding()
@@ -93,6 +101,19 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 남은 집중 시간 감소
+    /// </summary>
+    public void DecreaseConcentrateRestTime()
+    {
+        if(GameManager.Instance.PlayMode == PlayMode.Concentration)
+        {
+            GameManager.Instance.ConcentrateContinueTime -= Time.deltaTime;
+            ShowRestTimeUI();
+            EndConcentrateMode();
+        }
+    }
+
+    /// <summary>
     /// UI 업데이트
     /// </summary>
     public void UpdateUI()
@@ -110,6 +131,35 @@ public class UIManager : MonoBehaviour
 
         _hpBarImage.fillAmount = rate.hpRate;
         _expBarImage.fillAmount = rate.expRate;
+    }
+    /// <summary>
+    /// 남은 집중 지속 시간 UI로 표시
+    /// </summary>
+    public void ShowRestTimeUI()
+    {
+        if(GameManager.Instance.PlayMode == PlayMode.General)
+        {
+            _concentrateRestTimeText.text = string.Empty;
+            return;
+        }
+
+        int restInitTime = (int)GameManager.Instance.ConcentrateContinueTime;
+        if (restInitTime<=-50)
+        {
+            _concentrateRestTimeText.text = string.Empty;
+        }
+        else _concentrateRestTimeText.text = (restInitTime >= 60) ? (restInitTime/60).ToString() : restInitTime.ToString();
+    }
+    /// <summary>
+    /// 집중 모드 종료
+    /// </summary>
+    public void EndConcentrateMode()
+    {
+        if(GameManager.Instance.ConcentrateContinueTime<=0 && GameManager.Instance.ConcentrateContinueTime > -10)
+        {
+            _concentrateRestTimeText.text = string.Empty;
+            _settingUI.Change_GeneralMode();
+        }
     }
     /// <summary>
     /// HP, EXP 비율 계산

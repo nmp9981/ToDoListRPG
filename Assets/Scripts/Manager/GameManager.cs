@@ -59,8 +59,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayMode _playMode = PlayMode.General;//플레이 모드
     private int _requireExpRate = 105;//경험치 배율
     private int _symbolMaxCount = 20;//칭호 개수
+    [SerializeField] private float _concentrateContinueTime;//집중 지속 시간
     public PlayMode PlayMode { get { return _playMode; } set { _playMode = value; } }
     public int RequireExpRate { get { return _requireExpRate; } }
     public int SymbolMaxCount { get { return _symbolMaxCount; } }
+    public float ConcentrateContinueTime { get { return _concentrateContinueTime; }set { _concentrateContinueTime = value; } }
     #endregion
 }
