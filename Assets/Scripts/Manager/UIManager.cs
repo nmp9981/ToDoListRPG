@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private MissionDetailUI _missionDetailUI;
     [SerializeField] private MissionDeleteUI _missionDeleteUI;
     [SerializeField] private SettingUI _settingUI;
+    [SerializeField] private StoreUI _storeUI;
  
     [Header("메세지")]
     [SerializeField] private TextMeshProUGUI _messageText;
@@ -255,6 +256,13 @@ public class UIManager : MonoBehaviour
     public void CloseSettingUI()
     {
         _settingUI.gameObject.SetActive(false);
+    }
+    #endregion
+
+    #region 상점
+    public void OpenStore()
+    {
+        _storeUI.gameObject.SetActive(true);
     }
     #endregion
 }
