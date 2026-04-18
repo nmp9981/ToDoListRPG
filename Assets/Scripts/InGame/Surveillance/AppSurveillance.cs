@@ -17,7 +17,7 @@ public class AppSurveillance : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating(nameof(InspectUrl), 3f, 3f);
+        InvokeRepeating(nameof(InspectUrl), 3f, 5f);
     }
     /// <summary>
     /// URL 감시
@@ -28,39 +28,31 @@ public class AppSurveillance : MonoBehaviour
         {
             string url = GetCurrentUrl(true);
             string prog = GetCurrentUrl(false);
+            var ins = GameManager.Instance._player;
 
             if (url != string.Empty)
             {
                 if (!WhitelistManager.Instance.IsContainAllowUrl(url))
                 {
-                    GameManager.Instance._player.DecreaseHP(3);
+                    ins.DecreaseHP(7);
+                    ins.TodayLossHP += 7;
+                    ins.CountOtherAction += 1;
+                    ins.ConsumeConcentrateTime = Mathf.Max(0, ins.ConsumeConcentrateTime - 5);
                 }
             }
             if (prog != string.Empty)
             {
                 if (!WhitelistManager.Instance.IsContainAllowUProcess(prog))
                 {
-                    GameManager.Instance._player.DecreaseHP(3);
+                    ins.DecreaseHP(7);
+                    ins.TodayLossHP += 7;
+                    ins.CountOtherAction += 1;
+                    ins.ConsumeConcentrateTime = Mathf.Max(0, ins.ConsumeConcentrateTime - 5);
                 }
             }
         }
     }
-    /// <summary>
-    /// 프로그램 감시
-    /// </summary>
-    void InspectProgram()
-    {
-        if (GameManager.Instance.PlayMode == PlayMode.Concentration)
-        {
-            string url = GetCurrentUrl(false);
-            if (url == string.Empty) return;
-
-            if (!WhitelistManager.Instance.IsContainAllowUProcess(url))
-            {
-                GameManager.Instance._player.DecreaseHP(1);
-            }
-        }
-    }
+   
     /// <summary>
     /// URL or 프로그램 가져오기
     /// </summary>

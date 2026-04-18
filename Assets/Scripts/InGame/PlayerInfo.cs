@@ -48,6 +48,11 @@ public class PlayerInfo : MonoBehaviour
     private int _playerIncreaseHP = 500;
     private int _playerDecreaseEXPPercent = 30;
 
+    private float _consumeConcentrateTime = 0;
+    private int _countOtherAction=0;
+    private int _countCompleteTODO=0;
+    private float _todayLossHP=0;
+
     public int PlayerLV { get { return _playerLv; } set { _playerLv = value; } }
     public int PlayerSymbolIndex { get { return _playerSymbolIndex; } set { _playerSymbolIndex = value; } }
     public int PlayerHasMoney { get { return _playerHasMoney; } set { _playerHasMoney = value; } }
@@ -57,9 +62,16 @@ public class PlayerInfo : MonoBehaviour
     public int PlayerFullExp { get { return _playerFullExp; } set { _playerFullExp = value; } }
     public int PlayerDecreaseExpPercent { get { return _playerDecreaseEXPPercent; } }
 
+    public float ConsumeConcentrateTime { get { return _consumeConcentrateTime; } set { _consumeConcentrateTime = value; } }
+    public int CountOtherAction { get { return _countOtherAction; } set { _countOtherAction = value; } }
+    public int CountCompleteTODO { get { return _countCompleteTODO; } set { _countCompleteTODO = value; } }
+    public float TodayLossHP { get { return _todayLossHP; } set { _todayLossHP = value; } }
+
     private void Awake()
     {
         InitPlayerInfo();
+        UIManager.UIInstance.InitConcentrateText();
+        InitConcentrateInfo();
     }
 
     /// <summary>
@@ -75,6 +87,16 @@ public class PlayerInfo : MonoBehaviour
         PlayerSymbolIndex = 0;
 
         UIManager.UIInstance.UpdateUI();
+    }
+    /// <summary>
+    /// 집중 정보 초기화
+    /// </summary>
+    public void InitConcentrateInfo()
+    {
+        ConsumeConcentrateTime = 0;
+        CountOtherAction = 0;
+        CountCompleteTODO = 0;
+        TodayLossHP = 0;
     }
 
     public void GetReward(int xp, int money)

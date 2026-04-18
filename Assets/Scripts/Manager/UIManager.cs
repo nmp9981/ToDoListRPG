@@ -1,8 +1,10 @@
+using System.Numerics;
 using System.Reflection;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class UIManager : MonoBehaviour
@@ -30,7 +32,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private MissionDetailUI _missionDetailUI;
     [SerializeField] private MissionDeleteUI _missionDeleteUI;
     [SerializeField] private SettingUI _settingUI;
-    [SerializeField] private StoreUI _storeUI;
  
     [Header("메세지")]
     [SerializeField] private TextMeshProUGUI _messageText;
@@ -41,6 +42,12 @@ public class UIManager : MonoBehaviour
 
     [Header("집중 지속 시간")]
     [SerializeField] private TextMeshProUGUI _concentrateRestTimeText;//남은 집중 시간
+
+    [Header("오늘의 집중 통계")]
+    [SerializeField] private TextMeshProUGUI _todayConcentrationTimeText;
+    [SerializeField] private TextMeshProUGUI _countOtherActionText;
+    [SerializeField] private TextMeshProUGUI _todayCompleteTODOText;
+    [SerializeField] private TextMeshProUGUI _todayLossHPAmountText;
 
     static void Init()
     {
@@ -66,6 +73,7 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         DecreaseConcentrateRestTime();
+        UpdateConcentrateText();
     }
 
     void TextBinding()
@@ -114,6 +122,7 @@ public class UIManager : MonoBehaviour
         if (GameManager.Instance.PlayMode == PlayMode.Concentration)
         {
             GameManager.Instance.ConcentrateContinueTime -= Time.deltaTime;
+            GameManager.Instance._player.ConsumeConcentrateTime += Time.deltaTime;
             ShowRestTimeUI();
             EndConcentrateMode();
         }
@@ -137,6 +146,32 @@ public class UIManager : MonoBehaviour
 
         _hpBarImage.fillAmount = rate.hpRate;
         _expBarImage.fillAmount = rate.expRate;
+    }
+    /// <summary>
+    /// 집중 관련 UI 초기화
+    /// </summary>
+    public void InitConcentrateText()
+    {
+        _todayConcentrationTimeText.text = $"오늘의 집중 시간 : 0시간 0분";
+        _countOtherActionText.text = $"딴짓 적발 횟수 : 0회";
+        _todayCompleteTODOText.text = $"오늘 완료한 미션 횟수 : 0";
+        _todayLossHPAmountText.text = $"오늘 잃은 HP : 0.0%";
+    }
+    /// <summary>
+    /// 집중 관련 UI 업데이트
+    /// </summary>
+    public void UpdateConcentrateText()
+    {
+        var player = GameManager.Instance._player;
+        int hour = (int)player.ConsumeConcentrateTime / 3600;
+        int hourRest = (int)player.ConsumeConcentrateTime % 3600;
+        int minute = (int)hourRest / 60;
+        _todayConcentrationTimeText.text = $"오늘의 집중 시간 : {hour}시간 {minute}분";
+        _countOtherActionText.text = $"딴짓 적발 횟수 : {player.CountOtherAction}회";
+        _todayCompleteTODOText.text = $"오늘 완료한 미션 횟수 : {player.CountCompleteTODO}";
+        int Prime = (int)player.TodayLossHP % 10;
+        int intN = (int)player.TodayLossHP / 10;
+        _todayLossHPAmountText.text = $"오늘 잃은 HP : {intN}.{Prime}%";
     }
     /// <summary>
     /// 남은 집중 지속 시간 UI로 표시
@@ -208,6 +243,7 @@ public class UIManager : MonoBehaviour
             _deleteMissionSoon.SetRepeatTime();
         }
         _deleteMissionSoon.isComplete = false;
+        GameManager.Instance._player.CountCompleteTODO += 1;
         CloseCompleteUI();
     }
     #region 미션 세부 UI
@@ -256,13 +292,6 @@ public class UIManager : MonoBehaviour
     public void CloseSettingUI()
     {
         _settingUI.gameObject.SetActive(false);
-    }
-    #endregion
-
-    #region 상점
-    public void OpenStore()
-    {
-        _storeUI.gameObject.SetActive(true);
     }
     #endregion
 }
