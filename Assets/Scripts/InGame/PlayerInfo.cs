@@ -34,7 +34,7 @@ public struct SymbolInfo
 public class PlayerInfo : MonoBehaviour
 {
     public List<TaskInfo> _taskInfoList;//과제 리스트
-    public string _playerName = "나이트로드";//캐릭터 명
+    public string _playerName = string.Empty;//캐릭터 명
     public Image _spriteImage;//캐릭터 아이콘
 
 

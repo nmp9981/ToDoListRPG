@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _player = new PlayerInfo();
+        _player._playerName = PlayerPrefs.GetString("UserName");
         _player.InitPlayerInfo();
     }
     /// <summary>
