@@ -56,6 +56,8 @@ public class PlayerInfo : MonoBehaviour
     private float _totalConcentrateTime = 0;
     private float _totalCompleteMission = 0;
 
+    public Queue<float> _weekConcentrateTimeQueue = new();
+
     public int PlayerLV { get { return _playerLv; } set { _playerLv = value; } }
     public int PlayerSymbolIndex { get { return _playerSymbolIndex; } set { _playerSymbolIndex = value; } }
     public int PlayerHasMoney { get { return _playerHasMoney; } set { _playerHasMoney = value; } }
@@ -69,6 +71,9 @@ public class PlayerInfo : MonoBehaviour
     public int CountOtherAction { get { return _countOtherAction; } set { _countOtherAction = value; } }
     public int CountCompleteTODO { get { return _countCompleteTODO; } set { _countCompleteTODO = value; } }
     public float TodayLossHP { get { return _todayLossHP; } set { _todayLossHP = value; } }
+
+    public float TotalConcentrateTime { get { return _totalConcentrateTime; } set { _totalConcentrateTime = value; } }
+    public float TotalCompleteMission { get { return _totalCompleteMission; } set { _totalCompleteMission = value; } }
 
     private void Awake()
     {
@@ -89,6 +94,7 @@ public class PlayerInfo : MonoBehaviour
         PlayerFullExp = 200;
         PlayerSymbolIndex = 0;
 
+        _weekConcentrateTimeQueue.Clear();
         UIManager.UIInstance.UpdateUI();
     }
     /// <summary>

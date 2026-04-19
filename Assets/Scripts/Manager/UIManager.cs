@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private MissionDetailUI _missionDetailUI;
     [SerializeField] private MissionDeleteUI _missionDeleteUI;
     [SerializeField] private SettingUI _settingUI;
+    [SerializeField] private StatusUI _statusUI;
  
     [Header("메세지")]
     [SerializeField] private TextMeshProUGUI _messageText;
@@ -121,8 +122,10 @@ public class UIManager : MonoBehaviour
         }
         if (GameManager.Instance.PlayMode == PlayMode.Concentration)
         {
+            var player = GameManager.Instance._player;
             GameManager.Instance.ConcentrateContinueTime -= Time.deltaTime;
-            GameManager.Instance._player.ConsumeConcentrateTime += Time.deltaTime;
+            player.ConsumeConcentrateTime += Time.deltaTime;
+            player.TotalConcentrateTime += Time.deltaTime;
             ShowRestTimeUI();
             EndConcentrateMode();
         }
@@ -244,6 +247,7 @@ public class UIManager : MonoBehaviour
         }
         _deleteMissionSoon.isComplete = false;
         GameManager.Instance._player.CountCompleteTODO += 1;
+        GameManager.Instance._player.TotalCompleteMission += 1;
         CloseCompleteUI();
     }
     #region 미션 세부 UI
@@ -292,6 +296,18 @@ public class UIManager : MonoBehaviour
     public void CloseSettingUI()
     {
         _settingUI.gameObject.SetActive(false);
+    }
+    #endregion
+
+    #region 통계창
+    public void OpenStatusUI()
+    {
+        _statusUI.gameObject.SetActive(true);
+        _statusUI.OpenSettingStatusUI();
+    }
+    public void CloseStatusUI()
+    {
+        _statusUI.gameObject.SetActive(false);
     }
     #endregion
 }

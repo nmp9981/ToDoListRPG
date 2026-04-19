@@ -7,6 +7,7 @@ public static class CalTimeUtility
     public const int minutesUnit = 60;
     public const int hourUnit = 3600;
     public const int dayUnit = 86400;
+    public const int yearUnit = 31536000;
 
     /// <summary>
     /// 숫자(초)를 시간으로
@@ -171,6 +172,24 @@ public static class CalTimeUtility
 
         //총 시간
         return diffSecond + minutesUnit * diffMinute + hourUnit * diffHour + dayUnit * diffDay;
+    }
+    /// <summary>
+    /// 초를 일단위까지
+    /// </summary>
+    /// <param name="second"></param>
+    /// <returns></returns>
+    public static string SecondToDay(float second)
+    {
+        int year = (int)second / yearUnit;//연
+        int yearRest = (int)second % yearUnit;
+        int day = (int)yearRest / dayUnit;//일
+        int dayRest = (int)yearRest % dayUnit;
+        int hour = (int)dayRest / hourUnit;//시간
+        int hourRest = (int)dayRest % hourUnit;
+        int minute = (int)hourRest / minutesUnit;//분
+
+        string dayString = $"{year}년 {day}일 {hour}시간 {minute}분";
+        return dayString;
     }
 
     /// <summary>

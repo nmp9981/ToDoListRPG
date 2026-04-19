@@ -38,6 +38,7 @@ public class AppSurveillance : MonoBehaviour
                     ins.TodayLossHP += 7;
                     ins.CountOtherAction += 1;
                     ins.ConsumeConcentrateTime = Mathf.Max(0, ins.ConsumeConcentrateTime - 5);
+                    ins.TotalConcentrateTime = Mathf.Max(0, ins.TotalConcentrateTime - 5);
                 }
             }
             if (prog != string.Empty)
@@ -48,6 +49,7 @@ public class AppSurveillance : MonoBehaviour
                     ins.TodayLossHP += 7;
                     ins.CountOtherAction += 1;
                     ins.ConsumeConcentrateTime = Mathf.Max(0, ins.ConsumeConcentrateTime - 5);
+                    ins.TotalConcentrateTime = Mathf.Max(0, ins.TotalConcentrateTime - 5);
                 }
             }
         }
