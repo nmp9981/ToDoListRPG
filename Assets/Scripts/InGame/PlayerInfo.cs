@@ -53,6 +53,9 @@ public class PlayerInfo : MonoBehaviour
     private int _countCompleteTODO=0;
     private float _todayLossHP=0;
 
+    private float _totalConcentrateTime = 0;
+    private float _totalCompleteMission = 0;
+
     public int PlayerLV { get { return _playerLv; } set { _playerLv = value; } }
     public int PlayerSymbolIndex { get { return _playerSymbolIndex; } set { _playerSymbolIndex = value; } }
     public int PlayerHasMoney { get { return _playerHasMoney; } set { _playerHasMoney = value; } }

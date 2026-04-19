@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour
         float rate = (float)_requireExpRate / 100f;
         return 2000*(int)Mathf.Pow(rate, lv-10);
     }
+
     #region ตฅภฬลอ
     public PlayerInfo _player;
     public GameObject _missionPrefab;
