@@ -56,7 +56,7 @@ public class PlayerInfo : MonoBehaviour
     private float _totalConcentrateTime = 0;
     private float _totalCompleteMission = 0;
 
-    public Queue<float> _weekConcentrateTimeQueue = new();
+    public Stack<float> _weekConcentrateTimeStack = new();
 
     public int PlayerLV { get { return _playerLv; } set { _playerLv = value; } }
     public int PlayerSymbolIndex { get { return _playerSymbolIndex; } set { _playerSymbolIndex = value; } }
@@ -84,6 +84,7 @@ public class PlayerInfo : MonoBehaviour
 
     /// <summary>
     /// 캐릭터 정보 초기화
+    /// TODO : 추후에는 캐릭 생성시 1회만 작동되게 해야함
     /// </summary>
     public void InitPlayerInfo()
     {
@@ -94,7 +95,7 @@ public class PlayerInfo : MonoBehaviour
         PlayerFullExp = 200;
         PlayerSymbolIndex = 0;
 
-        _weekConcentrateTimeQueue.Clear();
+        _weekConcentrateTimeStack.Clear();
         UIManager.UIInstance.UpdateUI();
     }
     /// <summary>

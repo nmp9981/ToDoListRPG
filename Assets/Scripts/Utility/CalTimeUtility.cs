@@ -191,6 +191,77 @@ public static class CalTimeUtility
         string dayString = $"{year}년 {day}일 {hour}시간 {minute}분";
         return dayString;
     }
+    /// <summary>
+    /// 각 요일별 개수
+    /// </summary>
+    /// <returns></returns>
+    public static int WeekCount(DateTime date)
+    {
+        int countValue = 0;
+        switch (date.DayOfWeek)
+        {
+            case DayOfWeek.Sunday:
+                countValue = 6;
+                break;
+            case DayOfWeek.Monday:
+                countValue = 0;
+                break;
+            case DayOfWeek.Tuesday:
+                countValue = 1;
+                break;
+            case DayOfWeek.Wednesday:
+                countValue = 2;
+                break;
+            case DayOfWeek.Thursday:
+                countValue = 3;
+                break;
+            case DayOfWeek.Friday:
+                countValue = 4;
+                break;
+            case DayOfWeek.Saturday:
+                countValue = 5;
+                break;
+            default:
+                break;
+        }
+        return countValue;
+    }
+    /// <summary>
+    /// 요일 번호 -> 요일 문자
+    /// </summary>
+    /// <returns></returns>
+    public static string NumToStringWeek(int num)
+    {
+        string weekText = string.Empty;
+
+        switch (num)
+        {
+            case 0:
+                weekText = "월";
+                break;
+            case 1:
+                weekText = "화";
+                break;
+            case 2:
+                weekText = "수";
+                break;
+            case 3:
+                weekText = "목";
+                break;
+            case 4:
+                weekText = "금";
+                break;
+            case 5:
+                weekText = "토";
+                break;
+            case 6:
+                weekText = "일";
+                break;
+            default:
+                break;
+        }
+        return weekText;
+    }
 
     /// <summary>
     /// 각 달별 일 수 
