@@ -38,15 +38,23 @@ public class StatusUI : MonoBehaviour
     /// </summary>
     void WeekGraph(PlayerInfo player)
     {
-        //최근 7+n일 정보
-        int recentCount = 7 + CalTimeUtility.WeekCount(System.DateTime.Now);
+        //최근 7일 정보(전날까지의 기록)
         List<float> dayResultList = new();
-        
+        //여기서는 stack의 복사본을 쓴다
+        Stack<float> copyWeekConcentrateTimeStack = player._weekConcentrateTimeStack;
+        for (int i = 0; i < 7; i++)
+        {
+            if (copyWeekConcentrateTimeStack.Count <= 0) break;
 
+            float time = copyWeekConcentrateTimeStack.Pop();
+            dayResultList.Add(time);
+        }
+        dayResultList.Reverse();
         //현재 정보
         var today = player.ConsumeConcentrateTime;
 
-
+        //끝나면 stack의 복사본은 사라짐
+        copyWeekConcentrateTimeStack.Clear();
     }
     /// <summary>
     /// 주간 기록, 월~일
