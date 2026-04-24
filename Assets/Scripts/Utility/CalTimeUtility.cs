@@ -192,6 +192,20 @@ public static class CalTimeUtility
         return dayString;
     }
     /// <summary>
+    /// 초를 시간단위까지
+    /// </summary>
+    /// <param name="second"></param>
+    /// <returns></returns>
+    public static string SecondToHour(float second)
+    {
+        int hour = (int)second / hourUnit;//시간
+        int hourRest = (int)second % hourUnit;
+        int minute = (int)hourRest / minutesUnit;//분
+
+        string dayString = (hour == 0) ? $"{minute}분" : $"{hour}시간 {minute}분";
+        return dayString;
+    }
+    /// <summary>
     /// 각 요일별 개수
     /// </summary>
     /// <returns></returns>

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StatusUI : MonoBehaviour
 { 
@@ -16,6 +17,11 @@ public class StatusUI : MonoBehaviour
     [SerializeField] List<TextMeshProUGUI> _weekConcentrateTextList = new();
     [SerializeField] TextMeshProUGUI _PrevWeekAverageConcentrateText;
     [SerializeField] TextMeshProUGUI _WeekAverageConcentrateText;
+
+    [Header("그래프")]
+    [SerializeField] List<TextMeshProUGUI> _dayTextList = new();
+    [SerializeField] List<Image> _stickList = new();
+    [SerializeField] List<TextMeshProUGUI> _yAxisScaleList = new();
 
     /// <summary>
     /// 통계 창 세팅
@@ -49,9 +55,27 @@ public class StatusUI : MonoBehaviour
             float time = copyWeekConcentrateTimeStack.Pop();
             dayResultList.Add(time);
         }
-        dayResultList.Reverse();
-        //현재 정보
-        var today = player.ConsumeConcentrateTime;
+        //7개 채우기
+        while (dayResultList.Count < 7)
+        {
+            dayResultList.Add(0);
+        }
+
+        if (dayResultList.Count>0) dayResultList.Reverse();//정렬
+       
+        //그래프의 최대 최솟값 구하기
+        float minValue = GraphUtility.MaxMinValue(dayResultList).mini;
+        float maxValue = GraphUtility.MaxMinValue(dayResultList).maxi;
+        float maxYvalue = GraphUtility.MaxYAxisValue(maxValue);
+
+        //Y축 그리기
+        GraphUtility.DrawYAxisScale(_yAxisScaleList, maxYvalue, 0);
+
+        //X축 정보
+        GraphUtility.DrawXAxisScale(_stickList, dayResultList, maxValue);
+
+        //날짜 적기
+        GraphUtility.XAxisDateText(_dayTextList, 7);
 
         //끝나면 stack의 복사본은 사라짐
         copyWeekConcentrateTimeStack.Clear();
@@ -122,8 +146,9 @@ public class StatusUI : MonoBehaviour
                 }
             }
         }
-       
+
         //오늘 날짜
+        Debug.Log("총 집중 "+ sumCurTime);
         int curDayWeekIdx = ((int)DateTime.Now.DayOfWeek+6)% 7;
         _weekConcentrateTextList[curDayWeekIdx].text = 
             $"{CalTimeUtility.NumToStringWeek(curDayWeekIdx)}요일 : {CalTimeUtility.SecondToDay(sumCurTime)}";
