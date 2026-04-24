@@ -122,8 +122,8 @@ public class StatusUI : MonoBehaviour
         sumCurTime += player.ConsumeConcentrateTime;
         avgCurTime = sumCurTime / (recentCount + 1);
 
-        string prevTimeText = CalTimeUtility.SecondToDay(avgPrevTime);
-        string curTimeText = CalTimeUtility.SecondToDay(avgCurTime);
+        string prevTimeText = CalTimeUtility.SecondToDay(sumPrevTime);
+        string curTimeText = CalTimeUtility.SecondToDay(sumCurTime);
 
         _PrevWeekAverageConcentrateText.text = $"지난주 총 집중 시간 : {prevTimeText}";
         _WeekAverageConcentrateText.text = $"이번주 총 집중 시간 : {curTimeText}";
@@ -148,7 +148,6 @@ public class StatusUI : MonoBehaviour
         }
 
         //오늘 날짜
-        Debug.Log("총 집중 "+ sumCurTime);
         int curDayWeekIdx = ((int)DateTime.Now.DayOfWeek+6)% 7;
         _weekConcentrateTextList[curDayWeekIdx].text = 
             $"{CalTimeUtility.NumToStringWeek(curDayWeekIdx)}요일 : {CalTimeUtility.SecondToDay(sumCurTime)}";

@@ -31,7 +31,7 @@ public static class GraphUtility
         float maxY = maxValue;
 
         //1시간 이하
-        if (maxValue <= CalTimeUtility.hourUnit) maxY = maxValue;
+        if (maxValue <= CalTimeUtility.hourUnit) maxY = CalTimeUtility.hourUnit;
 
         //1~3시간 이하, 15분단위
         if (maxValue > CalTimeUtility.hourUnit && maxValue <= 3 * CalTimeUtility.hourUnit)
@@ -62,7 +62,7 @@ public static class GraphUtility
         for (int i = 0; i < numCount; i++)
         {
             DateTime date = today.AddDays(-i-1);
-            textList[i].text = date.ToString("MM/dd");
+            textList[i].text = $"{date.Month}/{date.Day}";
         }
     }
 
@@ -86,7 +86,7 @@ public static class GraphUtility
         {
             float curValue = gap * i + minValue;
             string hourTime = CalTimeUtility.SecondToHour(curValue);
-            textList[i].text = $"{hourTime} -";
+            textList[i].text = $"{hourTime} - ";
         }
     }
     /// <summary>
@@ -99,6 +99,9 @@ public static class GraphUtility
     {
         //데이터 개수
         int numCount = _data.Count;
+
+        //예외처리
+        if (maxValue == 0) maxValue = CalTimeUtility.hourUnit;
 
         //각 그래프 값
         for (int i = 0; i < numCount; i++)

@@ -202,7 +202,11 @@ public static class CalTimeUtility
         int hourRest = (int)second % hourUnit;
         int minute = (int)hourRest / minutesUnit;//분
 
-        string dayString = (hour == 0) ? $"{minute}분" : $"{hour}시간 {minute}분";
+        string hourString = (hour == 0) ? string.Empty : $"{hour}시간";
+        string minuteString = (minute == 0) ? string.Empty : $" {minute}분";
+        string dayString = hourString+" "+minuteString;
+
+        if (hour == 0 && minute == 0) dayString = "0분";
         return dayString;
     }
     /// <summary>
