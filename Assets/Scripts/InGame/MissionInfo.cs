@@ -6,7 +6,6 @@ public struct Mission
 {
     public string Title;
     public int getExp;
-    public int getMoney;
     public bool isRepeat;
 }
 
@@ -24,7 +23,6 @@ public class MissionInfo : MonoBehaviour
     [SerializeField] private GameObject repeatTextObj;
     [SerializeField] private TextMeshProUGUI titleTextUI;
     [SerializeField] private TextMeshProUGUI expTextUI;
-    [SerializeField] private TextMeshProUGUI moneyTextUI;
     [SerializeField] private TextMeshProUGUI dueTextUI;
 
     private void Awake()
@@ -69,7 +67,6 @@ public class MissionInfo : MonoBehaviour
     {
         titleTextUI.text = mission.Title;
         expTextUI.text = mission.getExp.ToString();
-        moneyTextUI.text = mission.getMoney.ToString();
         repeatTextObj.SetActive(mission.isRepeat);
     }
 

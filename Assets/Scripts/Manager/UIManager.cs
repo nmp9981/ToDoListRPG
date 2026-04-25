@@ -16,7 +16,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _playerNameText;
     [SerializeField] private TextMeshProUGUI _playerLvText;
     [SerializeField] private TextMeshProUGUI _playerSymbolText;
-    [SerializeField] private TextMeshProUGUI _playerMoneyText;
     [SerializeField] private TextMeshProUGUI _playerHPText;
     [SerializeField] private TextMeshProUGUI _playerEXPText;
 
@@ -94,9 +93,6 @@ public class UIManager : MonoBehaviour
                 case "SymbolText":
                     _playerSymbolText = txt;
                     break;
-                case "MoneyText":
-                    _playerMoneyText = txt;
-                    break;
                 case "HPText":
                     _playerHPText = txt;
                     break;
@@ -140,7 +136,6 @@ public class UIManager : MonoBehaviour
         _playerNameText.text = $"이름 : {player._playerName}";
         _playerLvText.text = $"Lv. {player.PlayerLV}";
         _playerSymbolText.text = $"{GameManager.Instance._playerLvSymbolImage[player.PlayerSymbolIndex]._symbolName}";
-        _playerMoneyText.text = $"{player.PlayerHasMoney}";
         _titleImage.sprite = GameManager.Instance._playerLvSymbolImage[player.PlayerSymbolIndex]._spriteImage;
 
         var rate = Cal_HP_EXPRate();
@@ -234,7 +229,7 @@ public class UIManager : MonoBehaviour
     public void ClickMissonCompleteButton()
     {
         var player = GameManager.Instance._player;
-        player.GetReward(_selectMisson.getExp, _selectMisson.getMoney);
+        player.GetReward(_selectMisson.getExp);
         //반복 여부에 따라 삭제할지 결정
         if (!_selectMisson.isRepeat)//반복 아니면 삭제
         {

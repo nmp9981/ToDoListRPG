@@ -40,7 +40,6 @@ public class PlayerInfo : MonoBehaviour
 
     private int _playerLv;
     private int _playerSymbolIndex;
-    private int _playerHasMoney;
     private int _playerCurrentHP;
     private int _playerCurrentEXP;
     private int _playerFullHP = 1000;
@@ -60,7 +59,6 @@ public class PlayerInfo : MonoBehaviour
 
     public int PlayerLV { get { return _playerLv; } set { _playerLv = value; } }
     public int PlayerSymbolIndex { get { return _playerSymbolIndex; } set { _playerSymbolIndex = value; } }
-    public int PlayerHasMoney { get { return _playerHasMoney; } set { _playerHasMoney = value; } }
     public int PlayerCurrentHP { get { return _playerCurrentHP; } set { _playerCurrentHP = value; } }
     public int PlayerCurrentExp { get { return _playerCurrentEXP; } set { _playerCurrentEXP = value; } }
     public int PlayerFullHP { get { return _playerFullHP; } set { _playerFullHP = value; } }
@@ -89,7 +87,6 @@ public class PlayerInfo : MonoBehaviour
     public void InitPlayerInfo()
     {
         PlayerLV = 1;
-        PlayerHasMoney = 1000;
         PlayerCurrentHP = PlayerFullHP;
         PlayerCurrentExp = 20;
         PlayerFullExp = 200;
@@ -109,9 +106,8 @@ public class PlayerInfo : MonoBehaviour
         TodayLossHP = 0;
     }
 
-    public void GetReward(int xp, int money)
+    public void GetReward(int xp)
     {
-        PlayerHasMoney += money;
         PlayerCurrentExp += xp;
         PlayerLevelUP();
     }
@@ -188,7 +184,6 @@ public class PlayerInfo : MonoBehaviour
     {
         int amountDecrease = (PlayerFullExp * _playerDecreaseEXPPercent) / 100;//°¨¼Ò·®
         PlayerCurrentExp -= amountDecrease;
-        PlayerHasMoney -= (PlayerHasMoney/10); 
 
         if (PlayerCurrentExp < 0)
         {

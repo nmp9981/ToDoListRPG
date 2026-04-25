@@ -109,14 +109,14 @@ public class EnrollMission : MonoBehaviour
         if (_missionNameText.text == string.Empty) return;
 
         //보상 입력 검사
-        if (_missionGetExp.text == string.Empty || _missionGetMoney.text == string.Empty)
+        if (_missionGetExp.text == string.Empty)
         {
             UIManager.UIInstance.ShowMessage("보상을 입력해주세요", Color.black);
             return;
         }
 
         //보상 범위 검사
-        if (_missionGetExp.text.Length > 7 || _missionGetMoney.text.Length > 7)
+        if (_missionGetExp.text.Length > 7)
         {
             UIManager.UIInstance.ShowMessage("최대 7자리까지만 입력할 수 있습니다.", Color.black);
             return;
@@ -131,7 +131,6 @@ public class EnrollMission : MonoBehaviour
         _newMissionInfo.missionUnit = _newMissionType;
         _newMissionInfo.mission.Title = _missionNameText.text;
         _newMissionInfo.mission.getExp = int.Parse(_missionGetExp.text);
-        _newMissionInfo.mission.getMoney = int.Parse(_missionGetMoney.text);
         _newMissionInfo.mission.isRepeat = (_newMissionType != TaskUnit.Personal)? _isRepeat.isOn:false;
         _newMissionInfo.missionDetail = _missionDetailText.text;
         _newMissionInfo.dueTime = SetDueTime(_newMissionType);

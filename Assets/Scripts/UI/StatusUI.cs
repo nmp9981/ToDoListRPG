@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class StatusUI : MonoBehaviour
 { 
     [SerializeField] TextMeshProUGUI _nameText;
+    [SerializeField] TextMeshProUGUI _symbolText;
+    [SerializeField] Image _symbolImage;
 
     [Header("ÃÑ ÁýÁß")]
     [SerializeField] TextMeshProUGUI _totalConcentrateText;
@@ -30,6 +32,11 @@ public class StatusUI : MonoBehaviour
     {
         var player = GameManager.Instance._player;
         _nameText.text = player._playerName;
+
+        string fulltitle = GameManager.Instance._playerLvSymbolImage[player.PlayerSymbolIndex]._symbolName;
+        int idx = fulltitle.IndexOf("-");
+        _symbolText.text = fulltitle.Substring(0,idx-1);
+        _symbolImage.sprite = GameManager.Instance._playerLvSymbolImage[player.PlayerSymbolIndex]._spriteImage;
 
         string totalTimeText = CalTimeUtility.SecondToDay(player.TotalConcentrateTime);
         _totalConcentrateText.text = $"ÃÑ ÁýÁß ½Ã°£ : {totalTimeText}";
