@@ -171,6 +171,9 @@ public class EnrollMission : MonoBehaviour
         //타이머 시작
         _newMissionInfo.StartTimer();
 
+        //Json 파일 추가
+        SaveManager.Instance.Data.activeMissions.Add(_newMissionInfo.missionData);
+
         //미션 등록 창 닫기
         Close_EnrollMisison();
     }

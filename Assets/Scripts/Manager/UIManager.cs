@@ -233,6 +233,7 @@ public class UIManager : MonoBehaviour
         //반복 여부에 따라 삭제할지 결정
         if (!_selectMisson.isRepeat)//반복 아니면 삭제
         {
+            SaveManager.Instance.Data.activeMissions.Remove(_deleteMissionSoon.missionData);
             Destroy(_deleteMissionSoon.gameObject);
         }
         else

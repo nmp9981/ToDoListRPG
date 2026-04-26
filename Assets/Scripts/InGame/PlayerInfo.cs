@@ -78,9 +78,19 @@ public class PlayerInfo : MonoBehaviour
 
     private void Awake()
     {
-        InitPlayerInfo();
+        var data = SaveManager.Instance.Data;
+
+        // 첫 실행인지 판단
+        bool isFirstRun = string.IsNullOrEmpty(data.playerName);
+
+        if (isFirstRun)
+        {
+            // 첫 실행 → 초기값 세팅
+            InitPlayerInfo();
+        }
+      
         UIManager.UIInstance.InitConcentrateText();
-        InitConcentrateInfo();
+        UIManager.UIInstance.UpdateUI();   // 로드된 값으로 UI 한번 갱신
     }
 
     /// <summary>

@@ -35,10 +35,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _player = new PlayerInfo();
-        _player._playerName = PlayerPrefs.GetString("UserName");
-        _player.InitPlayerInfo();
+        if (_player == null)
+        {
+            _player = FindAnyObjectByType<PlayerInfo>();
+        }
     }
+
     /// <summary>
     /// 요구 경험치 계산
     /// </summary>

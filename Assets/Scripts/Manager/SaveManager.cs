@@ -17,6 +17,7 @@ public class SaveManager : MonoBehaviour
 
     private void Awake()
     {
+        // 싱글톤
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -38,10 +39,14 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 저장 파일 로드. 없으면 새로 생성.
+    /// </summary>
     public void Load()
     {
         try
         {
+            // 1. 메인 파일 시도
             if (File.Exists(SavePath))
             {
                 string json = File.ReadAllText(SavePath);
@@ -49,12 +54,13 @@ public class SaveManager : MonoBehaviour
 
                 if (Data != null)
                 {
-                    Debug.Log($"[SaveManager] 로드 완료: Lv.{Data.level} {Data.playerName}");
+                    Debug.Log($"[SaveManager] 로드 완료: {SavePath}");
+                    CheckDateRollover();  // 자정 처리
                     return;
                 }
             }
 
-            // 백업 시도
+            // 2. 메인 실패 시 백업 시도
             if (File.Exists(BackupPath))
             {
                 Debug.LogWarning("[SaveManager] 메인 파일 손상, 백업에서 복구");
@@ -63,14 +69,16 @@ public class SaveManager : MonoBehaviour
 
                 if (Data != null)
                 {
-                    Save();
+                    Save();  // 복구 즉시 메인에 다시 저장
+                    CheckDateRollover();
                     return;
                 }
             }
 
-            // 새로 생성
+            // 3. 새 데이터 생성
             Debug.Log("[SaveManager] 저장 파일 없음, 새로 생성");
             Data = new SaveData();
+            Data.lastActiveDate = DateTime.Now.ToString("yyyy-MM-dd");
             Save();
         }
         catch (Exception e)
@@ -80,6 +88,9 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 저장 (안전 저장 패턴)
+    /// </summary>
     public void Save()
     {
         if (Data == null) return;
@@ -87,15 +98,15 @@ public class SaveManager : MonoBehaviour
         try
         {
             Data.lastSavedAt = DateTime.Now.ToString("o");
-
             string json = JsonUtility.ToJson(Data, true);
 
-            // 안전 저장 (임시 파일 → 교체 + 백업)
             File.WriteAllText(TempPath, json);
 
             if (File.Exists(SavePath))
                 File.Copy(SavePath, BackupPath, true);
 
+            if (File.Exists(SavePath))
+                File.Delete(SavePath);
             File.Move(TempPath, SavePath);
 
             Debug.Log("[SaveManager] 저장 완료");
@@ -103,9 +114,60 @@ public class SaveManager : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogError($"[SaveManager] 저장 실패: {e.Message}");
+
+            if (File.Exists(TempPath))
+            {
+                try { File.Delete(TempPath); } catch { }
+            }
         }
+    }
+
+    /// <summary>
+    /// 자정 전환 처리: 어제까지의 오늘 통계를 dailyRecords에 저장하고 리셋
+    /// </summary>
+    public void CheckDateRollover()
+    {
+        string today = DateTime.Now.ToString("yyyy-MM-dd");
+
+        if (string.IsNullOrEmpty(Data.lastActiveDate))
+        {
+            Data.lastActiveDate = today;
+            return;
+        }
+
+        if (Data.lastActiveDate == today) return;
+
+        // 날짜 바뀜 → 어제 기록을 dailyRecords에 저장
+        var record = new DailyFocusRecord
+        {
+            date = Data.lastActiveDate,
+            focusSeconds = Data.todayConcentrateSeconds  // PlayerData 안에 있다면 경로 조정
+        };
+
+        // 같은 날짜 레코드 있으면 업데이트, 없으면 추가
+        var existing = Data.dailyRecords.Find(r => r.date == Data.lastActiveDate);
+        if (existing != null)
+            existing.focusSeconds = record.focusSeconds;
+        else
+            Data.dailyRecords.Add(record);
+
+        // 오늘 통계 리셋
+        Data.todayConcentrateSeconds = 0;
+        Data.countOtherAction = 0;
+        Data.todayMissionCompleted = 0;
+        Data.todayLossHP = 0f;
+
+        Data.lastActiveDate = today;
+
+        Debug.Log($"[SaveManager] 날짜 전환: {today} 시작");
     }
 
     private void OnApplicationQuit() => Save();
     private void OnApplicationPause(bool pause) { if (pause) Save(); }
+
+    [ContextMenu("저장 폴더 열기")]
+    public void OpenSaveFolder()
+    {
+        Application.OpenURL(Application.persistentDataPath);
+    }
 }

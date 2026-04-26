@@ -13,7 +13,7 @@ public class SaveData
     public int titleIdx = 0;  // 0=브론즈5, 4=브론즈1, 5=실버5...
 
     // ===== 미션 =====
-    public List<MissionInfo> activeMissions = new List<MissionInfo>();
+    public List<MissionData> activeMissions = new List<MissionData>();
 
     // ===== 일별 집중 기록 =====
     public List<DailyFocusRecord> dailyRecords = new List<DailyFocusRecord>();

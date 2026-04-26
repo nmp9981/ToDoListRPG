@@ -156,6 +156,7 @@ public class MissionInfo : MonoBehaviour
 
         GameManager.Instance._player.DecreaseHP(missionData.decreaseHP);
         GameManager.Instance._failMissionList.Add(this);
+        SaveManager.Instance.Data.activeMissions.Remove(missionData);
         Destroy(this.gameObject);
     }
     /// <summary>
@@ -179,6 +180,7 @@ public class MissionInfo : MonoBehaviour
     /// </summary>
     public void DeleteMission()
     {
+        SaveManager.Instance.Data.activeMissions.Remove(this.missionData);
         UIManager.UIInstance.OpenDeletelUI(this);
     }
 }
