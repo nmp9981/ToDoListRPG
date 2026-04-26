@@ -18,6 +18,9 @@ public class SaveData
     // ===== 일별 집중 기록 =====
     public List<DailyFocusRecord> dailyRecords = new List<DailyFocusRecord>();
 
+    // ==== 허용 프로그램 리스트
+    public Whitelistdata whitelistdata = new Whitelistdata();
+
     // ===== 평생 누적 통계 =====
     public long totalFocusSeconds = 0;
     public int totalMissionsCompleted = 0;

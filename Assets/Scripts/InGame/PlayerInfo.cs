@@ -57,7 +57,8 @@ public class PlayerInfo : MonoBehaviour
     private float _totalConcentrateTime = 0;
     private float _totalCompleteMission = 0;
 
-    public Stack<float> _weekConcentrateTimeStack = new();
+    public Stack<float> _weekConcentrateTimeStack = new();//실제 통계반영
+    public List<DailyFocusRecord> _dailyFocusRecordList = new();//데이터 저장용
 
     public int PlayerLV { get { return _playerLv; } set { _playerLv = value; } }
     public int PlayerSymbolIndex { get { return _playerSymbolIndex; } set { _playerSymbolIndex = value; } }
@@ -95,6 +96,8 @@ public class PlayerInfo : MonoBehaviour
         PlayerSymbolIndex = 0;
 
         _weekConcentrateTimeStack.Clear();
+        _dailyFocusRecordList.Clear();
+
         UIManager.UIInstance.UpdateUI();
     }
     /// <summary>

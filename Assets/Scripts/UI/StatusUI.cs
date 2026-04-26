@@ -55,13 +55,25 @@ public class StatusUI : MonoBehaviour
         List<float> dayResultList = new();
         //여기서는 stack의 복사본을 쓴다
         Stack<float> copyWeekConcentrateTimeStack = player._weekConcentrateTimeStack;
-        for (int i = 0; i < 7; i++)
-        {
-            if (copyWeekConcentrateTimeStack.Count <= 0) break;
+        
+        //for (int i = 0; i < 7; i++)
+        //{
+        //    if (copyWeekConcentrateTimeStack.Count <= 0) break;
 
-            float time = copyWeekConcentrateTimeStack.Pop();
-            dayResultList.Add(time);
+        //    float time = copyWeekConcentrateTimeStack.Pop();
+        //    dayResultList.Add(time);
+        //}
+
+        //뒤부터 7개를 뺀다.
+        int totalDailyCount = player._dailyFocusRecordList.Count;
+        for(int i = 0; i < 7; i++)
+        {
+            if (totalDailyCount - 1 - i < 0) break;
+
+            float time = player._dailyFocusRecordList[totalDailyCount-1-i].focusSeconds;
+            dayResultList.Add(time);//날짜 역순으로 채워짐
         }
+
         //7개 채우기
         while (dayResultList.Count < 7)
         {
@@ -96,27 +108,35 @@ public class StatusUI : MonoBehaviour
         int recentCount = CalTimeUtility.WeekCount(System.DateTime.Now);
         List<float> dayResultList = new();
 
-        for(int i = 0; i < recentCount+7; i++)
+        //for(int i = 0; i < recentCount+7; i++)
+        //{
+        //    if (player._weekConcentrateTimeStack.Count <= 0) break;
+           
+        //    float time = player._weekConcentrateTimeStack.Pop();
+        //    dayResultList.Add(time);
+        //}
+        for (int i = 0; i < recentCount + 7; i++)
         {
-            if (player._weekConcentrateTimeStack.Count <= 0) break;
+            int idx = player._dailyFocusRecordList.Count - 1 - i;
+            if (idx < 0) break;
 
-            float time = player._weekConcentrateTimeStack.Pop();
-            dayResultList.Add(time);
+            float time = player._dailyFocusRecordList[idx].focusSeconds;
+            dayResultList.Add(time);//뒤에서부터 넣는다.
         }
-        dayResultList.Reverse();
-
+        
         //지난주 기록(뒤 7개)
         float sumPrevTime = 0;
         float avgPrevTime = 0;
         float sumCurTime = 0;
         float avgCurTime = 0;
-        if (dayResultList.Count >= 7)//지난주 정보가 있는 경우만
+        if (dayResultList.Count > recentCount)//지난주 정보가 있는 경우만
         {
             for (int i = 0; i < 7; i++)
             {
-                sumPrevTime += dayResultList[7+i];
+                if (recentCount + i > dayResultList.Count) break;
+                sumPrevTime += dayResultList[recentCount+i];
             }
-            avgPrevTime = sumPrevTime / 7;
+            avgPrevTime = sumPrevTime / MathF.Min(dayResultList.Count-recentCount,7);
         }
         //이번주 기록(앞부분)
         if (dayResultList.Count > 0)
@@ -134,8 +154,9 @@ public class StatusUI : MonoBehaviour
 
         _PrevWeekAverageConcentrateText.text = $"지난주 총 집중 시간 : {prevTimeText}";
         _WeekAverageConcentrateText.text = $"이번주 총 집중 시간 : {curTimeText}";
-  
+
         //각 요일별 기록 - 월요일부터 기록
+        dayResultList.Reverse();
         if (dayResultList.Count > 0)
         {
             for (int i = 0; i < 7; i++)
@@ -146,10 +167,10 @@ public class StatusUI : MonoBehaviour
                 }
                 else
                 {
-                    int idx = (dayResultList.Count >= 7) ? i + 7 : i;
+                    int idx = (recentCount - i+6)%7;
                     float eachTime = dayResultList[idx];
                     string eachTimeText = CalTimeUtility.SecondToDay(eachTime);
-                    _weekConcentrateTextList[i].text = $"{CalTimeUtility.NumToStringWeek(idx)}요일 : {eachTimeText}";
+                    _weekConcentrateTextList[i].text = $"{CalTimeUtility.NumToStringWeek(i)}요일 : {eachTimeText}";
                 }
             }
         }

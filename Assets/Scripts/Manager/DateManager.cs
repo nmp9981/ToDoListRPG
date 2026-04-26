@@ -59,6 +59,12 @@ public class DateManager : MonoBehaviour
                 player.InitConcentrateInfo();
             }
             player._weekConcentrateTimeStack.Push(player.ConsumeConcentrateTime);
+
+            DailyFocusRecord dailyFocusRecord = new DailyFocusRecord();
+            dailyFocusRecord.date = $"{date.Month}/{date.Day}";
+            dailyFocusRecord.focusSeconds = player.ConsumeConcentrateTime;
+            player._dailyFocusRecordList.Add(dailyFocusRecord);
+
             _isMidNight = true;
         }
         else _isMidNight = false;
