@@ -55,15 +55,7 @@ public class StatusUI : MonoBehaviour
         List<float> dayResultList = new();
         //여기서는 stack의 복사본을 쓴다
         Stack<float> copyWeekConcentrateTimeStack = player._weekConcentrateTimeStack;
-        
-        //for (int i = 0; i < 7; i++)
-        //{
-        //    if (copyWeekConcentrateTimeStack.Count <= 0) break;
-
-        //    float time = copyWeekConcentrateTimeStack.Pop();
-        //    dayResultList.Add(time);
-        //}
-
+       
         //뒤부터 7개를 뺀다.
         int totalDailyCount = player._dailyFocusRecordList.Count;
         for(int i = 0; i < 7; i++)
@@ -108,13 +100,6 @@ public class StatusUI : MonoBehaviour
         int recentCount = CalTimeUtility.WeekCount(System.DateTime.Now);
         List<float> dayResultList = new();
 
-        //for(int i = 0; i < recentCount+7; i++)
-        //{
-        //    if (player._weekConcentrateTimeStack.Count <= 0) break;
-           
-        //    float time = player._weekConcentrateTimeStack.Pop();
-        //    dayResultList.Add(time);
-        //}
         for (int i = 0; i < recentCount + 7; i++)
         {
             int idx = player._dailyFocusRecordList.Count - 1 - i;

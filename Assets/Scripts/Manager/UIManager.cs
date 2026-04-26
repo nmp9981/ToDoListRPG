@@ -133,7 +133,7 @@ public class UIManager : MonoBehaviour
     public void UpdateUI()
     {
         var player = GameManager.Instance._player;
-        _playerNameText.text = $"이름 : {player._playerName}";
+        _playerNameText.text = $"이름 : {SaveManager.Instance.Data.playerName}";
         _playerLvText.text = $"Lv. {player.PlayerLV}";
         _playerSymbolText.text = $"{GameManager.Instance._playerLvSymbolImage[player.PlayerSymbolIndex]._symbolName}";
         _titleImage.sprite = GameManager.Instance._playerLvSymbolImage[player.PlayerSymbolIndex]._spriteImage;
@@ -161,6 +161,8 @@ public class UIManager : MonoBehaviour
     public void UpdateConcentrateText()
     {
         var player = GameManager.Instance._player;
+        if (player == null) return;
+
         int hour = (int)player.ConsumeConcentrateTime / 3600;
         int hourRest = (int)player.ConsumeConcentrateTime % 3600;
         int minute = (int)hourRest / 60;

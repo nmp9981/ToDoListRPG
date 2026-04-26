@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         if (_player == null)
         {

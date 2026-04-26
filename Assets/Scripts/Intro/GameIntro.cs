@@ -14,7 +14,7 @@ public class GameIntro : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        if (!PlayerPrefs.HasKey("UserName"))
+        if (SaveManager.Instance.Data.playerName==string.Empty)
         {
             OpenEnrollNick();
         }
@@ -46,7 +46,7 @@ public class GameIntro : MonoBehaviour
     {
         if (_nickInput.text == string.Empty) return;
 
-        PlayerPrefs.SetString("UserName",_nickInput.text);
+        SaveManager.Instance.Data.playerName =_nickInput.text;
         CloseEnrollNick();
     }
     /// <summary>
