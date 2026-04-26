@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ public enum TaskUnit
 /// <summary>
 /// 과제 정보
 /// </summary>
+[Serializable]
 public struct TaskInfo
 {
     public string _taskName;//과제 명

@@ -13,6 +13,6 @@ public class MissionDetailUI : MonoBehaviour
     {
         dueDateText.text = string.Empty;
 
-        dueDateText.text = mission.missionDetail+"\n\n"+mission.deadlineSecond;
+        dueDateText.text = mission.missionData.missionDetail + "\n\n"+mission.missionData.deadlineSecond;
     }
 }

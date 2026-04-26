@@ -128,15 +128,14 @@ public class EnrollMission : MonoBehaviour
 
         //미션 정보 등록
         _newMissionInfo.isComplete = false;
-        _newMissionInfo.missionUnit = _newMissionType;
-        _newMissionInfo.mission.Title = _missionNameText.text;
-        _newMissionInfo.mission.getExp = int.Parse(_missionGetExp.text);
-        _newMissionInfo.mission.isRepeat = (_newMissionType != TaskUnit.Personal)? _isRepeat.isOn:false;
-        _newMissionInfo.missionDetail = _missionDetailText.text;
+        _newMissionInfo.missionData.missionUnit = _newMissionType;
+        _newMissionInfo.missionData.mission.Title = _missionNameText.text;
+        _newMissionInfo.missionData.mission.getExp = int.Parse(_missionGetExp.text);
+        _newMissionInfo.missionData.mission.isRepeat = (_newMissionType != TaskUnit.Personal)? _isRepeat.isOn:false;
+        _newMissionInfo.missionData.missionDetail = _missionDetailText.text;
         _newMissionInfo.dueTime = SetDueTime(_newMissionType);
         _newMissionInfo.SetDeadline();
-        //_deadlineText.text = CalTimeUtility.NumToTime(_newMissionInfo.dueTime);
-
+        
         //날짜 검사에서 미달시 미션생성 X
         if (Fail_InspectInputTime(_newMissionType))
         {
@@ -163,6 +162,9 @@ public class EnrollMission : MonoBehaviour
             default:
                 break;
         }
+        //감소 HP설정
+        _newMissionInfo.SetDecreaseHP();
+
         //UI 공개
         _newMissionInfo.ShowMissionUI();
 

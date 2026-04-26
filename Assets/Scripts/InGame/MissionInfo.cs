@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
+[Serializable]
 public struct Mission
 {
     public string Title;
@@ -9,15 +10,35 @@ public struct Mission
     public bool isRepeat;
 }
 
-public class MissionInfo : MonoBehaviour
+[Serializable]
+public class MissionData
 {
-    public Mission mission;
+    public Mission mission;              
     public string missionDetail;
     public TaskUnit missionUnit;
-    public float dueTime;//마감 기한(실시간)
-    public bool isComplete = false;//미션 완료 여부
-    public int decreaseHP;//감소 HP
-    public string deadlineSecond;//마감 기한(초)
+    public float dueTime;
+    public bool isComplete = false;
+    public int decreaseHP;
+    public string deadlineSecond;
+}
+
+public class MissionInfo : MonoBehaviour
+{
+    public MissionData missionData;
+
+    public Mission mission => missionData.mission;
+    public TaskUnit missionUnit => missionData.missionUnit;
+    public float dueTime
+    {
+        get => missionData.dueTime;
+        set => missionData.dueTime = value;
+    }
+    public bool isComplete
+    {
+        get => missionData.isComplete;
+        set => missionData.isComplete = value;
+    }
+    public int decreaseHP => missionData.decreaseHP;
 
     [Header("UI")]
     [SerializeField] private GameObject repeatTextObj;
@@ -27,11 +48,14 @@ public class MissionInfo : MonoBehaviour
 
     private void Awake()
     {
-        SetDecreaseHP();
+        if (missionData == null)
+            missionData = new MissionData();
     }
 
     private void Update()
     {
+        if (missionData == null) return;
+
         ShowDeadline();
         FailMissonCheck();
     }
@@ -39,21 +63,21 @@ public class MissionInfo : MonoBehaviour
     /// <summary>
     /// HP감소량 설정
     /// </summary>
-    void SetDecreaseHP()
+    public void SetDecreaseHP()
     {
         switch (missionUnit)
         {
             case TaskUnit.Day:
-                decreaseHP = 90;
+                missionData.decreaseHP = 90;
                 break;
             case TaskUnit.Week:
-                decreaseHP = 300;
+                missionData.decreaseHP = 300;
                 break;
             case TaskUnit.Month:
-                decreaseHP = 700;
+                missionData.decreaseHP = 700;
                 break;
             case TaskUnit.Personal:
-                decreaseHP = 110;
+                missionData.decreaseHP = 110;
                 break;
             default:
                 break;
@@ -65,14 +89,14 @@ public class MissionInfo : MonoBehaviour
     /// </summary>
     public void ShowMissionUI()
     {
-        titleTextUI.text = mission.Title;
-        expTextUI.text = mission.getExp.ToString();
-        repeatTextObj.SetActive(mission.isRepeat);
+        titleTextUI.text = missionData.mission.Title;
+        expTextUI.text = missionData.mission.getExp.ToString();
+        repeatTextObj.SetActive(missionData.mission.isRepeat);
     }
 
     public void SetDeadline()
     {
-        deadlineSecond = DateTime.Now.AddSeconds(dueTime).ToString();
+        missionData.deadlineSecond = DateTime.Now.AddSeconds(missionData.dueTime).ToString();
     }
     public void StartTimer()
     {
@@ -80,7 +104,7 @@ public class MissionInfo : MonoBehaviour
     }
     void FlowTime()
     {
-        dueTime -= 1;
+        missionData.dueTime -= 1;
     }
 
     /// <summary>
@@ -88,17 +112,17 @@ public class MissionInfo : MonoBehaviour
     /// </summary>
     public void SetRepeatTime()
     {
-        switch (missionUnit)
+        switch (missionData.missionUnit)
         {
             case TaskUnit.Day:
-                dueTime += CalTimeUtility.dayUnit;
+                missionData.dueTime += CalTimeUtility.dayUnit;
                 break;
             case TaskUnit.Week:
-                dueTime += (CalTimeUtility.dayUnit*7);
+                missionData.dueTime += (CalTimeUtility.dayUnit*7);
                 break;
             case TaskUnit.Month:
                 DateTime now  = DateTime.Now;
-                dueTime += (CalTimeUtility.dayUnit*CalTimeUtility.AddMonthDay(now.Month, now.Year));
+                missionData.dueTime += (CalTimeUtility.dayUnit*CalTimeUtility.AddMonthDay(now.Month, now.Year));
                 break;
             default:
                 break;
@@ -110,12 +134,12 @@ public class MissionInfo : MonoBehaviour
     /// </summary>
     void ShowDeadline()
     {
-        int dueDay = (int)dueTime / 86400;
-        int restHour = (int)dueTime % 86400;
+        int dueDay = (int)missionData.dueTime / 86400;
+        int restHour = (int)missionData.dueTime % 86400;
         int dueHour = (int)restHour / 3600;
-        int restMinute = (int)dueTime % 3600;
+        int restMinute = (int)missionData.dueTime % 3600;
         int dueMinute = (int)restMinute / 60;
-        int dueSecond = (int)dueTime % 60;
+        int dueSecond = (int)missionData.dueTime % 60;
 
         if (dueDay >= 1)
         {
@@ -128,9 +152,9 @@ public class MissionInfo : MonoBehaviour
     /// </summary>
     public void FailMissonCheck()
     {
-        if (dueTime > 0) return;
+        if (missionData.dueTime > 0) return;
 
-        GameManager.Instance._player.DecreaseHP(decreaseHP);
+        GameManager.Instance._player.DecreaseHP(missionData.decreaseHP);
         GameManager.Instance._failMissionList.Add(this);
         Destroy(this.gameObject);
     }
@@ -139,8 +163,8 @@ public class MissionInfo : MonoBehaviour
     /// </summary>
     public void MissonComplete()
     {
-        isComplete = true;
-        UIManager.UIInstance.OpenCompleteUI(mission,this);
+        missionData.isComplete = true;
+        UIManager.UIInstance.OpenCompleteUI(missionData.mission, this);
     }
     
     /// <summary>
