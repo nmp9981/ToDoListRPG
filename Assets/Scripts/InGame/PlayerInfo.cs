@@ -96,14 +96,13 @@ public class PlayerInfo : MonoBehaviour
 
     /// <summary>
     /// 캐릭터 정보 초기화
-    /// TODO : 추후에는 캐릭 생성시 1회만 작동되게 해야함
     /// </summary>
     public void InitPlayerInfo()
     {
         PlayerLV = 1;
         PlayerCurrentHP = PlayerFullHP;
-        PlayerCurrentExp = 20;
-        PlayerFullExp = 200;
+        PlayerCurrentExp = 0;
+        PlayerFullExp = 300;
         PlayerSymbolIndex = 0;
 
         _weekConcentrateTimeStack.Clear();

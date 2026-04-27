@@ -8,8 +8,8 @@ public class MissionDeleteUI : MonoBehaviour
     /// <param name="mission"></param>
     public void RealDeleteMission()
     {
-        UIManager.UIInstance.CloseDeleteUI();
         SaveManager.Instance.Data.activeMissions.Remove(UIManager.UIInstance._deleteMissionSoon.missionData);
+        UIManager.UIInstance.CloseDeleteUI();
         Destroy(UIManager.UIInstance._deleteMissionSoon.gameObject);
     }
 }

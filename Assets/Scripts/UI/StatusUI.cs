@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -31,7 +30,7 @@ public class StatusUI : MonoBehaviour
     public void OpenSettingStatusUI()
     {
         var player = GameManager.Instance._player;
-        _nameText.text = player._playerName;
+        _nameText.text = SaveManager.Instance.Data.playerName;
 
         string fulltitle = GameManager.Instance._playerLvSymbolImage[player.PlayerSymbolIndex]._symbolName;
         int idx = fulltitle.IndexOf("-");

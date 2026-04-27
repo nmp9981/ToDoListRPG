@@ -3,6 +3,7 @@ using System.Reflection;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using static UnityEditor.Experimental.GraphView.GraphView;
@@ -48,6 +49,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _countOtherActionText;
     [SerializeField] private TextMeshProUGUI _todayCompleteTODOText;
     [SerializeField] private TextMeshProUGUI _todayLossHPAmountText;
+
+    [Header("인트로 씬")]
+    [SerializeField] private string _introSceneName = "Intro";
 
     static void Init()
     {
@@ -306,6 +310,14 @@ public class UIManager : MonoBehaviour
     public void CloseStatusUI()
     {
         _statusUI.gameObject.SetActive(false);
+    }
+    #endregion
+
+    #region 되돌아가기
+    public void ReturnIntro()
+    {
+        SaveManager.Instance.Save();
+        SceneManager.LoadScene(_introSceneName);
     }
     #endregion
 }

@@ -13902,6 +13902,7 @@ MonoBehaviour:
   _countOtherActionText: {fileID: 1332539083}
   _todayCompleteTODOText: {fileID: 569811819}
   _todayLossHPAmountText: {fileID: 1385707774}
+  _introSceneName: Intro
 --- !u!1 &675922169
 GameObject:
   m_ObjectHideFlags: 0
@@ -20150,7 +20151,7 @@ GameObject:
   - component: {fileID: 1045859567}
   - component: {fileID: 1045859566}
   m_Layer: 5
-  m_Name: DeleteButton
+  m_Name: ReturnButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20220,9 +20221,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EnrollMission, Assembly-CSharp
-        m_MethodName: AddMission
+      - m_Target: {fileID: 673336937}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: ReturnIntro
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -28161,7 +28162,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 89131494, guid: 917b62a0c0e7bdc4a8669116f5c98233, type: 3}
+  m_Sprite: {fileID: 2127989574, guid: 917b62a0c0e7bdc4a8669116f5c98233, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
