@@ -88,8 +88,7 @@ public class PlayerInfo : MonoBehaviour
             GameManager.Instance._player = this;
 
         // 첫 실행인지 판단
-        bool isFirstRun = string.IsNullOrEmpty(data.playerName) || data.level == 0
-                  || data.totalFocusSeconds == 0;
+        bool isFirstRun = string.IsNullOrEmpty(data.playerName);
 
         if (isFirstRun)
         {

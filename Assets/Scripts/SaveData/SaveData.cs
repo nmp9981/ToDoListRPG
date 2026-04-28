@@ -10,7 +10,7 @@ public class SaveData
     public int level = 1;
     public int exp = 0;
     public int playerFullExp = 300;
-    public int hp = 100;
+    public int hp = 1000;
     public int playerFullHp = 1000;
     public int titleIdx = 0;  // 0=브론즈5, 4=브론즈1, 5=실버5...
 
