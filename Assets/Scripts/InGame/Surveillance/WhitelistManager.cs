@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -12,6 +13,7 @@ public class WhitelistManager : MonoBehaviour
 
     private Whitelistdata _data = new Whitelistdata();
     private string _savePath;
+    private const int _maxAllowCount = 8;
 
     public List<string> GetProcessList() => _data.allowProcessList;
     public List<string> GetUrlList() => _data.allowURLList;
@@ -48,6 +50,23 @@ public class WhitelistManager : MonoBehaviour
         {
             _data = JsonUtility.FromJson<Whitelistdata>(File.ReadAllText(_savePath));
         }
+
+        List<string> processList = GetProcessList();
+        if (processList.Count > 0)
+        {
+            foreach (var process in processList)
+            {
+                SpawnItem(_processContent, process);
+            }
+        }
+        List<string> urlList = GetUrlList();
+        if(urlList.Count > 0)
+        {
+            foreach (var url in urlList)
+            {
+                SpawnItem(_urlContent, url);
+            }
+        }
     }
     /// <summary>
     /// 저장
@@ -67,6 +86,13 @@ public class WhitelistManager : MonoBehaviour
     {
         string input = _processInput.text;
         if (input == string.Empty) return;
+
+        //개수 제한
+        if (_data.allowProcessList.Count > _maxAllowCount)
+        {
+            UIManager.UIInstance.ShowMessage("최대 8개까지만 등록 가능합니다.", Color.red);
+            return;
+        }
 
         string key = Normalize(input);
         _data.allowProcessList.Add(key);
@@ -94,6 +120,13 @@ public class WhitelistManager : MonoBehaviour
     {
         string input = _urlInput.text;
         if (input == string.Empty) return;
+
+        //개수 제한
+        if (_data.allowURLList.Count > _maxAllowCount)
+        {
+            UIManager.UIInstance.ShowMessage("최대 8개까지만 등록 가능합니다.", Color.red);
+            return;
+        }
 
         string key = NormalizeUrl(input);
         _data.allowURLList.Add(key);

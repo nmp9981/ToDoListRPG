@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 플레이 모드
@@ -35,11 +37,22 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_player == null)
+        //FindPlayer();
+    }
+
+    /// <summary>
+    /// 플레이어 찾기
+    /// </summary>
+    public void FindPlayer()
+    {
+        // 새 씬에서 PlayerInfo 다시 찾기
+        if(_player == null)
         {
             _player = FindAnyObjectByType<PlayerInfo>();
         }
+        Debug.Log($"[GameManager] 씬 '{SceneManager.GetActiveScene().name}' 로드됨, _player = {(_player == null ? "null" : "OK")}");
     }
+
 
     /// <summary>
     /// 요구 경험치 계산

@@ -60,25 +60,32 @@ public class PlayerInfo : MonoBehaviour
     public Stack<float> _weekConcentrateTimeStack = new();//실제 통계반영
     public List<DailyFocusRecord> _dailyFocusRecordList = new();//데이터 저장용
 
-    public int PlayerLV { get { return _playerLv; } set { _playerLv = value; } }
-    public int PlayerSymbolIndex { get { return _playerSymbolIndex; } set { _playerSymbolIndex = value; } }
-    public int PlayerCurrentHP { get { return _playerCurrentHP; } set { _playerCurrentHP = value; } }
-    public int PlayerCurrentExp { get { return _playerCurrentEXP; } set { _playerCurrentEXP = value; } }
-    public int PlayerFullHP { get { return _playerFullHP; } set { _playerFullHP = value; } }
-    public int PlayerFullExp { get { return _playerFullExp; } set { _playerFullExp = value; } }
+    // ===== SaveData 가리키는 단축 프로퍼티 =====
+    private SaveData D => SaveManager.Instance.Data;
+
+    //===== 캐릭터 기본 정보 (SaveData 위임) =====
+    public int PlayerLV { get { return D.level; } set { D.level = value; } }
+    public int PlayerSymbolIndex { get { return D.titleIdx; } set { D.titleIdx = value; } }
+    public int PlayerCurrentHP { get { return D.hp; } set { D.hp = value; } }
+    public int PlayerCurrentExp { get { return D.exp; } set { D.exp = value; } }
+    public int PlayerFullHP { get { return D.playerFullHp; } set { D.playerFullHp = value; } }
+    public int PlayerFullExp { get { return D.playerFullExp; } set { D.playerFullExp = value; } }
     public int PlayerDecreaseExpPercent { get { return _playerDecreaseEXPPercent; } }
 
-    public float ConsumeConcentrateTime { get { return _consumeConcentrateTime; } set { _consumeConcentrateTime = value; } }
-    public int CountOtherAction { get { return _countOtherAction; } set { _countOtherAction = value; } }
-    public int CountCompleteTODO { get { return _countCompleteTODO; } set { _countCompleteTODO = value; } }
-    public float TodayLossHP { get { return _todayLossHP; } set { _todayLossHP = value; } }
+    public float ConsumeConcentrateTime { get { return D.todayConcentrateSeconds; } set { D.todayConcentrateSeconds = value; } }
+    public int CountOtherAction { get { return D.countOtherAction; } set { D.countOtherAction = value; } }
+    public int CountCompleteTODO { get { return D.todayMissionCompleted; } set { D.todayMissionCompleted = value; } }
+    public float TodayLossHP { get { return D.todayLossHP; } set { D.todayLossHP = value; } }
 
-    public float TotalConcentrateTime { get { return _totalConcentrateTime; } set { _totalConcentrateTime = value; } }
-    public float TotalCompleteMission { get { return _totalCompleteMission; } set { _totalCompleteMission = value; } }
+    public float TotalConcentrateTime { get { return D.totalFocusSeconds; } set { D.totalFocusSeconds = value; } }
+    public int TotalCompleteMission { get { return D.totalMissionsCompleted; } set { D.totalMissionsCompleted = value; } }
 
     private void Awake()
     {
         var data = SaveManager.Instance.Data;
+
+        if (GameManager.Instance != null)
+            GameManager.Instance._player = this;
 
         // 첫 실행인지 판단
         bool isFirstRun = string.IsNullOrEmpty(data.playerName) || data.level == 0
@@ -88,9 +95,8 @@ public class PlayerInfo : MonoBehaviour
         {
             // 첫 실행 → 초기값 세팅
             InitPlayerInfo();
+            UIManager.UIInstance.InitConcentrateText();
         }
-      
-        UIManager.UIInstance.InitConcentrateText();
         UIManager.UIInstance.UpdateUI();   // 로드된 값으로 UI 한번 갱신
     }
 

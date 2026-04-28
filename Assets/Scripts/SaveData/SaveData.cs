@@ -9,7 +9,9 @@ public class SaveData
     public string playerName = "";
     public int level = 1;
     public int exp = 0;
-    public float hp = 100f;
+    public int playerFullExp = 300;
+    public int hp = 100;
+    public int playerFullHp = 1000;
     public int titleIdx = 0;  // 0=브론즈5, 4=브론즈1, 5=실버5...
 
     // ===== 미션 =====
@@ -22,11 +24,11 @@ public class SaveData
     public Whitelistdata whitelistdata = new Whitelistdata();
 
     // ===== 평생 누적 통계 =====
-    public long totalFocusSeconds = 0;
+    public float totalFocusSeconds = 0;
     public int totalMissionsCompleted = 0;
 
     // ===== 오늘의 통계 (자정에 리셋) =====
-    public int todayConcentrateSeconds = 0;
+    public float todayConcentrateSeconds = 0;
     public int countOtherAction = 0;
     public int todayMissionCompleted = 0;
     public float todayLossHP = 0f;

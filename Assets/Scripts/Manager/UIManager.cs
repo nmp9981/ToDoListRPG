@@ -138,7 +138,7 @@ public class UIManager : MonoBehaviour
     {
         var player = GameManager.Instance._player;
         _playerNameText.text = $"¿Ã∏ß : {SaveManager.Instance.Data.playerName}";
-        _playerLvText.text = $"Lv. {player.PlayerLV}";
+        _playerLvText.text = $"Lv. {SaveManager.Instance.Data.level}";
         _playerSymbolText.text = $"{GameManager.Instance._playerLvSymbolImage[player.PlayerSymbolIndex]._symbolName}";
         _titleImage.sprite = GameManager.Instance._playerLvSymbolImage[player.PlayerSymbolIndex]._spriteImage;
 
