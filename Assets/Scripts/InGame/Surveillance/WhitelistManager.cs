@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class WhitelistManager : MonoBehaviour
 {
-    public static WhitelistManager Instance { get; private set; }
+    private static WhitelistManager _instance;
 
     private Whitelistdata _data = new Whitelistdata();
     private string _savePath;
@@ -28,12 +29,22 @@ public class WhitelistManager : MonoBehaviour
     [SerializeField] private TMP_InputField _urlInput;
     [SerializeField] private Transform _urlContent;
 
+    public static WhitelistManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                GameObject obj = new GameObject("WhitelistManager");
+                _instance = obj.AddComponent<WhitelistManager>();
+                DontDestroyOnLoad(obj);
+            }
+            return _instance;
+        }
+    }
+
     private void Awake()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-
         _savePath = Path.Combine(Application.persistentDataPath, "whitelist.json");
         Load();
         _data.allowURLList.Clear();
@@ -181,7 +192,6 @@ public class WhitelistManager : MonoBehaviour
     private void SpawnItem(Transform parent, string label)
     {
         var go = Instantiate(_listItemPrefab, parent);
-
         // 텍스트 설정
         var text = go.GetComponentInChildren<TMP_Text>();
         if (text != null) text.text = label;
