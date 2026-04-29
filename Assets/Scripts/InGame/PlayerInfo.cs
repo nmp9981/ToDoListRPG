@@ -149,10 +149,12 @@ public class PlayerInfo : MonoBehaviour
             //칭호 변경
             if (PlayerLV >= gm._playerLvSymbolImage[PlayerSymbolIndex]._nextSymbolLv
                 && PlayerSymbolIndex < gm.SymbolMaxCount-1) PlayerSymbolIndex += 1;
+
+            //레벨업 메세지
+            UIManager.UIInstance.ShowMessage("레벨 업!!", Color.white);
         }
         //UI 반영
         UIManager.UIInstance.UpdateUI();
-        UIManager.UIInstance.ShowMessage("레벨 업!!", Color.white);
     }
     /// <summary>
     /// 레벨 다운
