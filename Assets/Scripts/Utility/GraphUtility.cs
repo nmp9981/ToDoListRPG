@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public static class GraphUtility
@@ -95,19 +95,20 @@ public static class GraphUtility
     /// <param name="textList"></param>
     /// <param name="maxValue"></param>
     /// <param name="minValue"></param>
-    public static void DrawXAxisScale(List<Image> imageList, List<float> _data, float maxValue)
+    public static void DrawXAxisScale(List<Image> imageList, List<float> _data, float maxValue, float maxYValue)
     {
         //데이터 개수
         int numCount = _data.Count;
 
         //예외처리
-        if (maxValue == 0) maxValue = CalTimeUtility.hourUnit;
+        if (maxValue == 0) maxYValue = CalTimeUtility.hourUnit;
 
         //각 그래프 값
         for (int i = 0; i < numCount; i++)
         {
-            float curValue = (_data[i]/maxValue);
+            float curValue = (_data[i]/maxYValue);
             imageList[i].fillAmount = curValue;
+            imageList[i].color = Color.red;
         }
     }
 }

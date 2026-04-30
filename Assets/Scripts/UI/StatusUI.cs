@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,19 +51,36 @@ public class StatusUI : MonoBehaviour
     /// </summary>
     void WeekGraph(PlayerInfo player)
     {
+        var _data = SaveManager.Instance.Data;
+
         //최근 7일 정보(전날까지의 기록)
         List<float> dayResultList = new();
-        //여기서는 stack의 복사본을 쓴다
-        Stack<float> copyWeekConcentrateTimeStack = player._weekConcentrateTimeStack;
-       
+        var oldestDay = DateTime.Parse(_data.dailyRecords[0].date);
+        DateTime today = DateTime.Now.Date;
+        int dayIdx = _data.dailyRecords.Count - 1;
+
         //뒤부터 7개를 뺀다.
         int totalDailyCount = player._dailyFocusRecordList.Count;
         for(int i = 0; i < 7; i++)
         {
-            if (totalDailyCount - 1 - i < 0) break;
+            //오늘 날짜에서 1일씩 뺀다
+            DateTime searchDay = today.AddDays(-i);
 
-            float time = player._dailyFocusRecordList[totalDailyCount-1-i].focusSeconds;
-            dayResultList.Add(time);//날짜 역순으로 채워짐
+            //기록에 들은 날짜가 너무 적을 경우 반복문 탈출
+            if (searchDay < oldestDay) break;
+
+            //인덱스
+            if (dayIdx < 0) break;
+
+            //값이 있을 경우
+            string customStr = searchDay.ToString("yyyy-MM-dd");
+            if (customStr == _data.dailyRecords[dayIdx].date)
+            {
+                float time = _data.dailyRecords[dayIdx].focusSeconds;
+                dayResultList.Add(time);
+                dayIdx--;
+            }
+            else dayResultList.Add(0);//값이 없을 경우 이날 기록이 없다는 뜻이니 0을 넣는다.
         }
 
         //7개 채우기
@@ -77,35 +95,51 @@ public class StatusUI : MonoBehaviour
         float minValue = GraphUtility.MaxMinValue(dayResultList).mini;
         float maxValue = GraphUtility.MaxMinValue(dayResultList).maxi;
         float maxYvalue = GraphUtility.MaxYAxisValue(maxValue);
-
+    
         //Y축 그리기
         GraphUtility.DrawYAxisScale(_yAxisScaleList, maxYvalue, 0);
 
         //X축 정보
-        GraphUtility.DrawXAxisScale(_stickList, dayResultList, maxValue);
+        GraphUtility.DrawXAxisScale(_stickList, dayResultList, maxValue, maxYvalue);
 
         //날짜 적기
         GraphUtility.XAxisDateText(_dayTextList, 7);
-
-        //끝나면 stack의 복사본은 사라짐
-        copyWeekConcentrateTimeStack.Clear();
     }
     /// <summary>
     /// 주간 기록, 월~일
     /// </summary>
     void WeekRecord(PlayerInfo player)
     {
+        var _data = SaveManager.Instance.Data;
+
         //최근 7+n일 정보(전날까지의 기록)
         int recentCount = CalTimeUtility.WeekCount(System.DateTime.Now);
+        var oldestDay = DateTime.Parse(_data.dailyRecords[0].date);
+        DateTime today = DateTime.Now.Date;
+
         List<float> dayResultList = new();
+        int dayIdx = _data.dailyRecords.Count-1;
 
         for (int i = 0; i < recentCount + 7; i++)
         {
-            int idx = player._dailyFocusRecordList.Count - 1 - i;
-            if (idx < 0) break;
+            //오늘 날짜에서 1일씩 뺀다
+            DateTime searchDay = today.AddDays(-i);
 
-            float time = player._dailyFocusRecordList[idx].focusSeconds;
-            dayResultList.Add(time);//뒤에서부터 넣는다.
+            //기록에 들은 날짜가 너무 적을 경우 반복문 탈출
+            if (searchDay < oldestDay) break;
+
+            //인덱스
+            if (dayIdx < 0) break;
+
+            //값이 있을 경우
+            string customStr = searchDay.ToString("yyyy-MM-dd");
+            if (customStr == _data.dailyRecords[dayIdx].date)
+            {
+                float time = _data.dailyRecords[dayIdx].focusSeconds;
+                dayResultList.Add(time);
+                dayIdx--;
+            }
+            else dayResultList.Add(0);//값이 없을 경우 이날 기록이 없다는 뜻이니 0을 넣는다.
         }
         
         //지난주 기록(뒤 7개)
@@ -162,7 +196,7 @@ public class StatusUI : MonoBehaviour
         //오늘 날짜
         int curDayWeekIdx = ((int)DateTime.Now.DayOfWeek+6)% 7;
         _weekConcentrateTextList[curDayWeekIdx].text = 
-            $"{CalTimeUtility.NumToStringWeek(curDayWeekIdx)}요일 : {CalTimeUtility.SecondToDay(sumCurTime)}";
+            $"{CalTimeUtility.NumToStringWeek(curDayWeekIdx)}요일 : {CalTimeUtility.SecondToDay(player.ConsumeConcentrateTime)}";
 
         //다시 기록 넣기 - 꺼낸 만큼 되돌린다.
         for (int i = 0; i < dayResultList.Count; i++)
