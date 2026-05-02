@@ -15236,6 +15236,11 @@ MonoBehaviour:
   - {fileID: 2065076561}
   - {fileID: 142399769}
   - {fileID: 1887178777}
+  missionPivotPoint:
+  - {fileID: 625480663}
+  - {fileID: 690929431}
+  - {fileID: 1484373220}
+  - {fileID: 1967601038}
   addMissionEnrollObj: {fileID: 906604847}
 --- !u!1 &721604464
 GameObject:

@@ -3,6 +3,7 @@ using UnityEngine;
 public class MissionUI : MonoBehaviour
 {
     [SerializeField] private GameObject[] missionPages = new GameObject[4];
+    [SerializeField] private Transform[] missionPivotPoint = new Transform[4];
     [SerializeField] private GameObject addMissionEnrollObj;
 
     private void Start()
@@ -33,7 +34,7 @@ public class MissionUI : MonoBehaviour
                 continue;
             }
 
-            Transform parent = missionPages[pageIndex].transform;
+            Transform parent = missionPivotPoint[pageIndex];
 
             GameObject obj = Instantiate(GameManager.Instance._missionPrefab, parent);
             MissionInfo info = obj.GetComponent<MissionInfo>();
