@@ -126,6 +126,10 @@ public class PlayerInfo : MonoBehaviour
         TodayLossHP = 0;
     }
 
+    /// <summary>
+    /// 경험치 얻기
+    /// </summary>
+    /// <param name="xp"></param>
     public void GetReward(int xp)
     {
         PlayerCurrentExp += xp;

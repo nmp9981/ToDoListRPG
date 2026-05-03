@@ -11763,16 +11763,16 @@ MonoBehaviour:
     _symbolName: "\uB2E4\uC774\uC544 I - \uB3C4\uC804\uC790"
     _spriteImage: {fileID: 1304847921, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
   - _nextSymbolLv: 92
-    _symbolName: "\uC2A4\uD0C0 IV - \uD55C\uACC4\uB97C \uB118\uC5B4\uC120 \uC790"
+    _symbolName: "\uC2A4\uD0C0 III - \uD55C\uACC4\uB97C \uB118\uC5B4\uC120 \uC790"
     _spriteImage: {fileID: 1912187023, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
   - _nextSymbolLv: 96
-    _symbolName: "\uC2A4\uD0C0 III - \uC601\uAC10\uC758 \uC6D0\uCC9C"
+    _symbolName: "\uC2A4\uD0C0 II - \uC601\uAC10\uC758 \uC6D0\uCC9C"
     _spriteImage: {fileID: -1959008279, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
   - _nextSymbolLv: 100
-    _symbolName: "\uC2A4\uD0C0 II - \uAC13\uC0DD\uC758 \uC9C0\uBC30\uC790"
+    _symbolName: "\uC2A4\uD0C0 I - \uAC13\uC0DD\uC758 \uC9C0\uBC30\uC790"
     _spriteImage: {fileID: -1775250146, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
   - _nextSymbolLv: 210000000
-    _symbolName: "\uC2A4\uD0C0 I - \uCD5C\uC885 \uC2B9\uB9AC\uC790"
+    _symbolName: "Master - \uCD5C\uC885 \uC2B9\uB9AC\uC790"
     _spriteImage: {fileID: 10404962, guid: a4c26c24a64c87d41ac77c8a06858eb4, type: 3}
   _failMissionList: []
   _playMode: 0
