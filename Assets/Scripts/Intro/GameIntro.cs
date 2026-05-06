@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -78,6 +79,36 @@ public class GameIntro : MonoBehaviour
     public void ShowInitPlayer()
     {
         init_PlayerInfoObject.SetActive(true);
+    }
+    /// <summary>
+    /// 캐릭터 정보 초기화
+    /// </summary>
+    public void Confirm_InitPlayerInfo()
+    {
+        //정보 초기화
+        SaveData userData = SaveManager.Instance.Data;
+        userData.playerName = string.Empty;
+        userData.level = 1;
+        userData.exp = 0;
+        userData.playerFullExp = 300;
+        userData.hp = 1000;
+        userData.playerFullHp = 1000;
+        userData.titleIdx = 0;
+
+        userData.activeMissions.Clear();
+        userData.dailyRecords.Clear();
+        userData.whitelistdata = new Whitelistdata();
+
+        userData.totalFocusSeconds = 0;
+        userData.totalMissionsCompleted = 0;
+
+        userData.todayConcentrateSeconds = 0;
+        userData.countOtherAction = 0;
+        userData.todayMissionCompleted = 0;
+        userData.todayLossHP = 0f;
+
+        //창 닫기
+        CloseInitPlayer();
     }
     /// <summary>
     /// 정보 초기화 창 닫기
