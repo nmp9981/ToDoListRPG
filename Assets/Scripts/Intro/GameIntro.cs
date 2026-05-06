@@ -6,6 +6,7 @@ public class GameIntro : MonoBehaviour
 {
     [SerializeField] GameObject howToPlayObject;
     [SerializeField] GameObject enrollNickObject;
+    [SerializeField] GameObject init_PlayerInfoObject;
     [SerializeField] TMP_InputField _nickInput;
     string gameSceneName = "Main";
 
@@ -70,5 +71,19 @@ public class GameIntro : MonoBehaviour
     public void CloseHowToPlay()
     {
         howToPlayObject.SetActive(false);
+    }
+    /// <summary>
+    /// 정보 초기화 창 열기
+    /// </summary>
+    public void ShowInitPlayer()
+    {
+        init_PlayerInfoObject.SetActive(true);
+    }
+    /// <summary>
+    /// 정보 초기화 창 닫기
+    /// </summary>
+    public void CloseInitPlayer()
+    {
+        init_PlayerInfoObject.SetActive(false);
     }
 }
